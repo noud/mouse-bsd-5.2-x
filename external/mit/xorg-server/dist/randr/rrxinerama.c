@@ -23,7 +23,7 @@
  * This Xinerama implementation comes from the SiS driver which has
  * the following notice:
  */
-/* 
+/*
  * SiS driver main code
  *
  * Copyright (C) 2001-2005 by Thomas Winischhofer, Vienna, Austria.
@@ -158,7 +158,7 @@ static int
 RRXineramaScreenCount (ScreenPtr pScreen)
 {
     int	i, n;
-    
+
     n = 0;
     if (rrGetScrPriv (pScreen))
     {
@@ -188,7 +188,7 @@ ProcRRXineramaGetScreenCount(ClientPtr client)
     rc = dixLookupWindow(&pWin, stuff->window, client, DixGetAttrAccess);
     if (rc != Success)
 	return rc;
-    
+
     rep.type = X_Reply;
     rep.length = 0;
     rep.sequenceNumber = client->sequence;
@@ -219,7 +219,7 @@ ProcRRXineramaGetScreenSize(ClientPtr client)
 
     pScreen = pWin->drawable.pScreen;
     pRoot = WindowTable[pScreen->myNum];
-    
+
     rep.type = X_Reply;
     rep.length = 0;
     rep.sequenceNumber = client->sequence;
@@ -245,7 +245,7 @@ ProcRRXineramaIsActive(ClientPtr client)
     xXineramaIsActiveReply	rep;
 
     REQUEST_SIZE_MATCH(xXineramaIsActiveReq);
-	
+
     rep.type = X_Reply;
     rep.length = 0;
     rep.sequenceNumber = client->sequence;

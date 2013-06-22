@@ -115,7 +115,7 @@ miRandRInit (ScreenPtr pScreen)
     xRRModeInfo modeInfo;
     char	name[64];
 #endif
-    
+
     if (!RRScreenInit (pScreen))
 	return FALSE;
     pScrPriv = rrGetScrPriv(pScreen);
@@ -129,7 +129,7 @@ miRandRInit (ScreenPtr pScreen)
 #endif
     pScrPriv->rrOutputValidateMode = miRROutputValidateMode;
     pScrPriv->rrModeDestroy = miRRModeDestroy;
-    
+
     RRScreenSetSizeRange (pScreen,
 			  pScreen->width, pScreen->height,
 			  pScreen->width, pScreen->height);
@@ -139,15 +139,15 @@ miRandRInit (ScreenPtr pScreen)
     modeInfo.width = pScreen->width;
     modeInfo.height = pScreen->height;
     modeInfo.nameLength = strlen (name);
-    
+
     mode = RRModeGet (&modeInfo, name);
     if (!mode)
 	return FALSE;
-    
+
     crtc = RRCrtcCreate (pScreen, NULL);
     if (!crtc)
 	return FALSE;
-    
+
     output = RROutputCreate (pScreen, "screen", 6, NULL);
     if (!output)
 	return FALSE;

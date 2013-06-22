@@ -46,7 +46,7 @@ unsigned int xf86ModeBandwidth(DisplayModePtr mode, int depth);
 
 int
 xf86ModeWidth (const DisplayModeRec *mode, Rotation rotation);
-    
+
 int
 xf86ModeHeight (const DisplayModeRec *mode, Rotation rotation);
 

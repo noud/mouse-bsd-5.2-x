@@ -220,20 +220,20 @@ RRChangeOutputProperty (RROutputPtr output, Atom property, Atom type,
 	    old_data = NULL;
 	    break;
 	case PropModeAppend:
-	    new_data = (pointer) (((char *) new_value.data) + 
+	    new_data = (pointer) (((char *) new_value.data) +
 				  (prop_value->size * size_in_bytes));
 	    old_data = new_value.data;
 	    break;
 	case PropModePrepend:
 	    new_data = new_value.data;
-	    old_data = (pointer) (((char *) new_value.data) + 
+	    old_data = (pointer) (((char *) new_value.data) +
 				  (prop_value->size * size_in_bytes));
 	    break;
 	}
 	if (new_data)
 	    memcpy ((char *) new_data, (char *) value, len * size_in_bytes);
 	if (old_data)
-	    memcpy ((char *) old_data, (char *) prop_value->data, 
+	    memcpy ((char *) old_data, (char *) prop_value->data,
 		    prop_value->size * size_in_bytes);
 
 	if (pending && pScrPriv->rrOutputSetProperty &&
@@ -286,14 +286,14 @@ RRPostPendingProperties (RROutputPtr output)
 
     if (!output->pendingProperties)
 	return TRUE;
-    
+
     output->pendingProperties = FALSE;
     for (property = output->properties; property; property = property->next)
     {
 	/* Skip non-pending properties */
 	if (!property->is_pending)
 	    continue;
-	
+
 	pending_value = &property->pending;
 	current_value = &property->current;
 
@@ -322,13 +322,13 @@ RRPropertyPtr
 RRQueryOutputProperty (RROutputPtr output, Atom property)
 {
     RRPropertyPtr   prop;
-    
+
     for (prop = output->properties; prop; prop = prop->next)
 	if (prop->propertyName == property)
 	    return prop;
     return NULL;
 }
-		       
+
 RRPropertyValuePtr
 RRGetOutputProperty (RROutputPtr output, Atom property, Bool pending)
 {
@@ -367,7 +367,7 @@ RRConfigureOutputProperty (RROutputPtr output, Atom property,
 	add = TRUE;
     } else if (prop->immutable && !immutable)
 	return(BadAccess);
-    
+
     /*
      * ranges must have even number of values
      */
@@ -379,7 +379,7 @@ RRConfigureOutputProperty (RROutputPtr output, Atom property,
 	return BadAlloc;
     if (num_values)
 	memcpy (new_values, values, num_values * sizeof (INT32));
-    
+
     /*
      * Property moving from pending to non-pending
      * loses any pending values
@@ -416,11 +416,11 @@ ProcRRListOutputProperties (ClientPtr client)
     int				    numProps = 0;
     RROutputPtr			    output;
     RRPropertyPtr			    prop;
-    
+
     REQUEST_SIZE_MATCH(xRRListOutputPropertiesReq);
 
     output = LookupOutput (client, stuff->output, DixReadAccess);
-    
+
     if (!output)
         return RRErrorBase + BadRROutput;
 
@@ -434,7 +434,7 @@ ProcRRListOutputProperties (ClientPtr client)
     rep.length = (numProps * sizeof(Atom)) >> 2;
     rep.sequenceNumber = client->sequence;
     rep.nAtoms = numProps;
-    if (client->swapped) 
+    if (client->swapped)
     {
 	int n;
 	swaps (&rep.sequenceNumber, n);
@@ -463,18 +463,18 @@ ProcRRQueryOutputProperty (ClientPtr client)
     RROutputPtr			    output;
     RRPropertyPtr		    prop;
     char *extra = NULL;
-    
+
     REQUEST_SIZE_MATCH(xRRQueryOutputPropertyReq);
 
     output = LookupOutput (client, stuff->output, DixReadAccess);
-    
+
     if (!output)
         return RRErrorBase + BadRROutput;
-    
+
     prop = RRQueryOutputProperty (output, stuff->property);
     if (!prop)
 	return BadName;
-    
+
     if (prop->num_valid) {
 	extra = xalloc(prop->num_valid * sizeof(INT32));
 	if (!extra)
@@ -486,7 +486,7 @@ ProcRRQueryOutputProperty (ClientPtr client)
     rep.pending = prop->is_pending;
     rep.range = prop->range;
     rep.immutable = prop->immutable;
-    if (client->swapped) 
+    if (client->swapped)
     {
 	int n;
 	swaps (&rep.sequenceNumber, n);
@@ -510,18 +510,18 @@ ProcRRConfigureOutputProperty (ClientPtr client)
     REQUEST(xRRConfigureOutputPropertyReq);
     RROutputPtr				output;
     int					num_valid;
-    
+
     REQUEST_AT_LEAST_SIZE(xRRConfigureOutputPropertyReq);
 
     output = LookupOutput (client, stuff->output, DixReadAccess);
-    
+
     if (!output)
         return RRErrorBase + BadRROutput;
-    
+
     num_valid = stuff->length - (sizeof (xRRConfigureOutputPropertyReq) >> 2);
     return RRConfigureOutputProperty (output, stuff->property,
 				      stuff->pending, stuff->range,
-				      FALSE, num_valid, 
+				      FALSE, num_valid,
 				      (INT32 *) (stuff + 1));
 }
 
@@ -561,7 +561,7 @@ ProcRRChangeOutputProperty (ClientPtr client)
     output = LookupOutput (client, stuff->output, DixWriteAccess);
     if (!output)
 	return RRErrorBase + BadRROutput;
-    
+
     if (!ValidAtom(stuff->property))
     {
 	client->errorValue = stuff->property;
@@ -587,13 +587,13 @@ ProcRRDeleteOutputProperty (ClientPtr client)
 {
     REQUEST(xRRDeleteOutputPropertyReq);
     RROutputPtr	output;
-              
+
     REQUEST_SIZE_MATCH(xRRDeleteOutputPropertyReq);
     UpdateCurrentTime();
     output = LookupOutput (client, stuff->output, DixWriteAccess);
     if (!output)
         return RRErrorBase + BadRROutput;
-    
+
     if (!ValidAtom(stuff->property))
     {
 	client->errorValue = stuff->property;
@@ -619,7 +619,7 @@ ProcRRGetOutputProperty (ClientPtr client)
     REQUEST_SIZE_MATCH(xRRGetOutputPropertyReq);
     if (stuff->delete)
 	UpdateCurrentTime();
-    output = LookupOutput (client, stuff->output, 
+    output = LookupOutput (client, stuff->output,
 			   stuff->delete ? DixWriteAccess :
 			   DixReadAccess);
     if (!output)
@@ -642,12 +642,12 @@ ProcRRGetOutputProperty (ClientPtr client)
     }
 
     for (prev = &output->properties; (prop = *prev); prev = &prop->next)
-	if (prop->propertyName == stuff->property) 
+	if (prop->propertyName == stuff->property)
 	    break;
 
     reply.type = X_Reply;
     reply.sequenceNumber = client->sequence;
-    if (!prop) 
+    if (!prop)
     {
 	reply.nItems = 0;
 	reply.length = 0;
@@ -703,7 +703,7 @@ ProcRRGetOutputProperty (ClientPtr client)
  *  Return type, format, value to client
  */
     n = (prop_value->format/8) * prop_value->size; /* size (bytes) of prop */
-    ind = stuff->longOffset << 2;        
+    ind = stuff->longOffset << 2;
 
    /* If longOffset is invalid such that it causes "len" to
 	    be negative, it's a value error. */

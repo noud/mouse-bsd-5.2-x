@@ -138,7 +138,7 @@ RRTransformRescale(struct pixman_f_transform *f_transform, double limit)
 
 /*
  * Compute the complete transformation matrix including
- * client-specified transform, rotation/reflection values and the crtc 
+ * client-specified transform, rotation/reflection values and the crtc
  * offset.
  *
  * Return TRUE if the resulting transform is not a simple translation.
@@ -202,7 +202,7 @@ RRTransformCompute (int			    x,
 	    rot_dx  = F ( 0);	    rot_dy  = F ( width-1);
 	    break;
 	}
-	
+
 	pixman_transform_rotate (transform, &inverse, rot_cos, rot_sin);
 	pixman_transform_translate (transform, &inverse, rot_dx, rot_dy);
 	pixman_f_transform_rotate (f_transform, f_inverse, f_rot_cos, f_rot_sin);
@@ -241,13 +241,13 @@ RRTransformCompute (int			    x,
 		scale_dy = F(width-1);
 	    }
 	}
-	
+
 	pixman_transform_scale (transform, &inverse, scale_x, scale_y);
 	pixman_f_transform_scale (f_transform, f_inverse, f_scale_x, f_scale_y);
 	pixman_transform_translate (transform, &inverse, scale_dx, scale_dy);
 	pixman_f_transform_translate (f_transform, f_inverse, f_scale_dx, f_scale_dy);
     }
-    
+
 #ifdef RANDR_12_INTERFACE
     if (rr_transform)
     {

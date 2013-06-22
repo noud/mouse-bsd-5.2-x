@@ -63,7 +63,7 @@ static PictFormatPtr
 compWindowFormat (WindowPtr pWin)
 {
     ScreenPtr	pScreen = pWin->drawable.pScreen;
-    
+
     return PictureMatchVisual (pScreen, pWin->drawable.depth,
 			       compGetWindowVisual (pWin));
 }
@@ -85,7 +85,7 @@ xf86RotateCrtcRedisplay (xf86CrtcPtr crtc, RegionPtr region)
     int			n = REGION_NUM_RECTS(region);
     BoxPtr		b = REGION_RECTS(region);
     XID			include_inferiors = IncludeInferiors;
-    
+
     src = CreatePicture (None,
 			 &root->drawable,
 			 format,
@@ -185,7 +185,7 @@ xf86RotatePrepare (ScreenPtr pScreen)
     for (c = 0; c < xf86_config->num_crtc; c++)
     {
 	xf86CrtcPtr crtc = xf86_config->crtc[c];
-	
+
 	if (crtc->rotatedData && !crtc->rotatedPixmap)
 	{
 	    crtc->rotatedPixmap = crtc->funcs->shadow_create (crtc,
@@ -199,7 +199,7 @@ xf86RotatePrepare (ScreenPtr pScreen)
 				xf86_config->rotation_damage);
 		xf86_config->rotation_damage_registered = TRUE;
 	    }
-	    
+
 	    xf86CrtcDamageShadow (crtc);
 	}
     }
@@ -217,7 +217,7 @@ xf86RotateRedisplay(ScreenPtr pScreen)
 	return FALSE;
     xf86RotatePrepare (pScreen);
     region = DamageRegion(damage);
-    if (REGION_NOTEMPTY(pScreen, region)) 
+    if (REGION_NOTEMPTY(pScreen, region))
     {
 	int			c;
 	SourceValidateProcPtr	SourceValidate;
@@ -242,11 +242,11 @@ xf86RotateRedisplay(ScreenPtr pScreen)
 		/* compute portion of damage that overlaps crtc */
 		REGION_INIT(pScreen, &crtc_damage, &crtc->bounds, 1);
 		REGION_INTERSECT (pScreen, &crtc_damage, &crtc_damage, region);
-		
+
 		/* update damaged region */
 		if (REGION_NOTEMPTY(pScreen, &crtc_damage))
     		    xf86RotateCrtcRedisplay (crtc, &crtc_damage);
-		
+
 		REGION_UNINIT (pScreen, &crtc_damage);
 	    }
 	}
@@ -283,7 +283,7 @@ xf86RotateDestroy (xf86CrtcPtr crtc)
     ScreenPtr		pScreen = pScrn->pScreen;
     xf86CrtcConfigPtr   xf86_config = XF86_CRTC_CONFIG_PTR(pScrn);
     int			c;
-    
+
     /* Free memory from rotation */
     if (crtc->rotatedPixmap || crtc->rotatedData)
     {
@@ -458,7 +458,7 @@ xf86CrtcRotate (xf86CrtcPtr crtc)
 						TRUE, pScreen, pScreen);
 	    if (!xf86_config->rotation_damage)
 		goto bail2;
-	    
+
 	    /* Wrap block handler */
 	    if (!xf86_config->BlockHandler) {
 		xf86_config->BlockHandler = pScreen->BlockHandler;

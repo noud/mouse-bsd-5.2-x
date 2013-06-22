@@ -69,7 +69,7 @@ extern int	RREventBase, RRErrorBase;
 
 extern int (*ProcRandrVector[RRNumberRequests])(ClientPtr);
 extern int (*SProcRandrVector[RRNumberRequests])(ClientPtr);
-    
+
 /*
  * Modeline for a monitor. Name follows directly after this struct
  */
@@ -160,7 +160,7 @@ typedef Bool (*RRScreenSetSizeProcPtr) (ScreenPtr	pScreen,
 					CARD16		height,
 					CARD32		mmWidth,
 					CARD32		mmHeight);
-					
+
 typedef Bool (*RRCrtcSetProcPtr) (ScreenPtr		pScreen,
 				  RRCrtcPtr		crtc,
 				  RRModePtr		mode,
@@ -208,7 +208,7 @@ typedef Bool (*RRGetInfoProcPtr) (ScreenPtr pScreen, Rotation *rotations);
 typedef Bool (*RRCloseScreenProcPtr) ( int i, ScreenPtr pscreen);
 
 /* These are for 1.0 compatibility */
- 
+
 typedef struct _rrRefresh {
     CARD16	    rate;
     RRModePtr	    mode;
@@ -230,7 +230,7 @@ typedef Bool (*RRSetConfigProcPtr) (ScreenPtr		pScreen,
 				    RRScreenSizePtr	pSize);
 
 #endif
-	
+
 
 typedef struct _rrScrPriv {
     /*
@@ -254,7 +254,7 @@ typedef struct _rrScrPriv {
     RRGetPanningProcPtr	rrGetPanning;
     RRSetPanningProcPtr	rrSetPanning;
 #endif
-    
+
     /*
      * Private part of the structure; not considered part of the ABI
      */
@@ -287,10 +287,10 @@ typedef struct _rrScrPriv {
      */
     Rotation		    rotations;
     CARD16		    reqWidth, reqHeight;
-    
+
     int			    nSizes;
     RRScreenSizePtr	    pSizes;
-    
+
     Rotation		    rotation;
     int			    rate;
     int			    size;
@@ -389,11 +389,11 @@ RRScreenSizeSet (ScreenPtr  pScreen,
  */
 void
 RRSendConfigNotify (ScreenPtr pScreen);
-    
+
 /*
  * screen dispatch
  */
-int 
+int
 ProcRRGetScreenSizeRange (ClientPtr client);
 
 int
@@ -416,7 +416,7 @@ ProcRRGetScreenInfo (ClientPtr client);
  */
 void
 RRDeliverScreenEvent (ClientPtr client, WindowPtr pWin, ScreenPtr pScreen);
-    
+
 /* mirandr.c */
 Bool
 miRandRInit (ScreenPtr pScreen);
@@ -483,7 +483,7 @@ RRGetRotation (ScreenPtr pScreen);
 CARD16
 RRVerticalRefresh (xRRModeInfo *mode);
 
-#ifdef RANDR_10_INTERFACE					
+#ifdef RANDR_10_INTERFACE
 /*
  * This is the old interface, deprecated but left
  * around for compatibility
@@ -495,7 +495,7 @@ RRVerticalRefresh (xRRModeInfo *mode);
 
 RRScreenSizePtr
 RRRegisterSize (ScreenPtr		pScreen,
-		short			width, 
+		short			width,
 		short			height,
 		short			mmWidth,
 		short			mmHeight);
@@ -525,7 +525,7 @@ RRSetScreenConfig (ScreenPtr		pScreen,
 		   int			rate,
 		   RRScreenSizePtr	pSize);
 
-#endif					
+#endif
 
 /* rrcrtc.c */
 
@@ -570,7 +570,7 @@ RRCrtcNotify (RRCrtcPtr	    crtc,
 
 void
 RRDeliverCrtcEvent (ClientPtr client, WindowPtr pWin, RRCrtcPtr crtc);
-    
+
 /*
  * Request that the Crtc be reconfigured
  */
@@ -620,7 +620,7 @@ RRCrtcGetScanoutSize(RRCrtcPtr crtc, int *width, int *height);
 
 /*
  * Compute the complete transformation matrix including
- * client-specified transform, rotation/reflection values and the crtc 
+ * client-specified transform, rotation/reflection values and the crtc
  * offset.
  *
  * Return TRUE if the resulting transform is not a simple translation.
@@ -735,13 +735,13 @@ RRModeDestroy (RRModePtr mode);
  */
 RRModePtr *
 RRModesForScreen (ScreenPtr pScreen, int *num_ret);
-    
+
 /*
  * Initialize mode type
  */
 Bool
 RRModeInit (void);
-    
+
 int
 ProcRRCreateMode (ClientPtr client);
 
@@ -835,7 +835,7 @@ ProcRRGetOutputPrimary (ClientPtr client);
  */
 Bool
 RROutputInit (void);
-    
+
 /* rrpointer.c */
 void
 RRPointerMoved (ScreenPtr pScreen, int x, int y);
@@ -853,13 +853,13 @@ RRGetOutputProperty (RROutputPtr output, Atom property, Bool pending);
 
 RRPropertyPtr
 RRQueryOutputProperty (RROutputPtr output, Atom property);
-		       
+
 void
 RRDeleteOutputProperty (RROutputPtr output, Atom property);
 
 Bool
 RRPostPendingProperties (RROutputPtr output);
-    
+
 int
 RRChangeOutputProperty (RROutputPtr output, Atom property, Atom type,
 			int format, int mode, unsigned long len,
@@ -894,17 +894,17 @@ RRXineramaExtensionInit(void);
 #endif /* _RANDRSTR_H_ */
 
 /*
- 
+
 randr extension implementation structure
 
 Query state:
     ProcRRGetScreenInfo/ProcRRGetScreenResources
 	RRGetInfo
- 
+
 	    • Request configuration from driver, either 1.0 or 1.2 style
 	    • These functions only record state changes, all
 	      other actions are pended until RRTellChanged is called
- 
+
 	    ->rrGetInfo
 	    1.0:
 		RRRegisterSize
@@ -919,15 +919,15 @@ Query state:
 		RROutputSetSubpixelOrder
 		RROutputSetClones
 		RRCrtcNotify
- 
+
 	• Must delay scanning configuration until after ->rrGetInfo returns
 	  because some drivers will call SetCurrentConfig in the middle
 	  of the ->rrGetInfo operation.
- 
+
 	1.0:
 
 	    • Scan old configuration, mirror to new structures
- 
+
 	    RRScanOldConfig
 		RRCrtcCreate
 		RROutputCreate
@@ -937,16 +937,16 @@ Query state:
 		RROldModeAdd	• This adds modes one-at-a-time
 		    RRModeGet
 		RRCrtcNotify
- 
+
 	• send events, reset pointer if necessary
- 
+
 	RRTellChanged
 	    WalkTree (sending events)
- 
+
 	    • when layout has changed:
 		RRPointerScreenConfigured
 		RRSendConfigNotify
- 
+
 Asynchronous state setting (1.2 only)
     When setting state asynchronously, the driver invokes the
     ->rrGetInfo function and then calls RRTellChanged to flush

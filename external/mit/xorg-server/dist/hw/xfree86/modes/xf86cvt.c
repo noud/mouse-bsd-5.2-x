@@ -54,7 +54,7 @@
  * likely though).
  *
  * About margins; i'm sure that they are to be the bit between HDisplay and
- * HBlankStart, HBlankEnd and HTotal, VDisplay and VBlankStart, VBlankEnd and 
+ * HBlankStart, HBlankEnd and HTotal, VDisplay and VBlankStart, VBlankEnd and
  * VTotal, where the overscan colour is shown. FB seems to call _all_ blanking
  * outside sync "margin" for some reason. Since we prefer seeing proper
  * blanking instead of the overscan colour, and since the Crtc* values will
@@ -70,7 +70,7 @@ xf86CVTMode(int HDisplay, int VDisplay, float VRefresh, Bool Reduced,
     DisplayModeRec  *Mode = xnfcalloc(1, sizeof(DisplayModeRec));
 
     /* 1) top/bottom margin size (% of height) - default: 1.8 */
-#define CVT_MARGIN_PERCENTAGE 1.8    
+#define CVT_MARGIN_PERCENTAGE 1.8
 
     /* 2) character cell horizontal granularity (pixels) - default 8 */
 #define CVT_H_GRANULARITY 8
@@ -152,7 +152,7 @@ xf86CVTMode(int HDisplay, int VDisplay, float VRefresh, Bool Reduced,
 
     if (!Reduced) { /* simplified GTF calculation */
 
-        /* 4) Minimum time of vertical sync + back porch interval (µs) 
+        /* 4) Minimum time of vertical sync + back porch interval (µs)
          * default 550.0 */
 #define CVT_MIN_VSYNC_BP 550.0
 
@@ -164,7 +164,7 @@ xf86CVTMode(int HDisplay, int VDisplay, float VRefresh, Bool Reduced,
         int  HBlank;
 
         /* 8. Estimated Horizontal period */
-        HPeriod = ((float) (1000000.0 / VFieldRate - CVT_MIN_VSYNC_BP)) / 
+        HPeriod = ((float) (1000000.0 / VFieldRate - CVT_MIN_VSYNC_BP)) /
             (VDisplayRnd + 2 * VMargin + CVT_MIN_V_PORCH + Interlace);
 
         /* 9. Find number of lines in sync + backporch */
@@ -206,16 +206,16 @@ xf86CVTMode(int HDisplay, int VDisplay, float VRefresh, Bool Reduced,
 
         HBlank = Mode->HDisplay * HBlankPercentage/(100.0 - HBlankPercentage);
         HBlank -= HBlank % (2*CVT_H_GRANULARITY);
-        
+
         /* 14. Find total number of pixels in a line. */
         Mode->HTotal = Mode->HDisplay + HBlank;
 
         /* Fill in HSync values */
         Mode->HSyncEnd = Mode->HDisplay + HBlank / 2;
 
-        Mode->HSyncStart = Mode->HSyncEnd - 
+        Mode->HSyncStart = Mode->HSyncEnd -
             (Mode->HTotal * CVT_HSYNC_PERCENTAGE) / 100;
-        Mode->HSyncStart += CVT_H_GRANULARITY - 
+        Mode->HSyncStart += CVT_H_GRANULARITY -
             Mode->HSyncStart % CVT_H_GRANULARITY;
 
         /* Fill in VSync values */
@@ -238,7 +238,7 @@ xf86CVTMode(int HDisplay, int VDisplay, float VRefresh, Bool Reduced,
         int  VBILines;
 
         /* 8. Estimate Horizontal period. */
-        HPeriod = ((float) (1000000.0 / VFieldRate - CVT_RB_MIN_VBLANK)) / 
+        HPeriod = ((float) (1000000.0 / VFieldRate - CVT_RB_MIN_VBLANK)) /
             (VDisplayRnd + 2*VMargin);
 
         /* 9. Find number of lines in vertical blanking */
@@ -247,7 +247,7 @@ xf86CVTMode(int HDisplay, int VDisplay, float VRefresh, Bool Reduced,
         /* 10. Check if vertical blanking is sufficient */
         if (VBILines < (CVT_RB_VFPORCH + VSync + CVT_MIN_V_BPORCH))
             VBILines = CVT_RB_VFPORCH + VSync + CVT_MIN_V_BPORCH;
-        
+
         /* 11. Find total number of lines in vertical field */
         Mode->VTotal = VDisplayRnd + 2 * VMargin + Interlace + VBILines;
 
@@ -271,7 +271,7 @@ xf86CVTMode(int HDisplay, int VDisplay, float VRefresh, Bool Reduced,
     Mode->HSync = ((float) Mode->Clock) / ((float) Mode->HTotal);
 
     /* 17/15. Find actual Field rate */
-    Mode->VRefresh = (1000.0 * ((float) Mode->Clock)) / 
+    Mode->VRefresh = (1000.0 * ((float) Mode->Clock)) /
         ((float) (Mode->HTotal * Mode->VTotal));
 
     /* 18/16. Find actual vertical frame frequency */

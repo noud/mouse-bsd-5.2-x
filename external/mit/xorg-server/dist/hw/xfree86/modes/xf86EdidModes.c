@@ -57,7 +57,7 @@ xf86MonitorSupportsReducedBlanking(xf86MonPtr DDC)
 		if (det_mon->section.ranges.supported_blanking & CVT_REDUCED)
 		    return TRUE;
 	}
-	
+
 	return FALSE;
     }
 
@@ -103,7 +103,7 @@ static Bool quirk_prefer_large_60 (int scrnIndex, xf86MonPtr DDC)
 	((DDC->vendor.prod_id == 1516) ||
 	(DDC->vendor.prod_id == 0x77e)))
 	return TRUE;
-    
+
     /* Acer AL1706 */
     if (memcmp (DDC->vendor.name, "ACR", 4) == 0 &&
 	DDC->vendor.prod_id == 44358)
@@ -184,7 +184,7 @@ static Bool quirk_135_clock_too_high (int scrnIndex, xf86MonPtr DDC)
     if (memcmp (DDC->vendor.name, "EPI", 4) == 0 &&
 	DDC->vendor.prod_id == 59264)
 	return TRUE;
-    
+
     return FALSE;
 }
 
@@ -275,7 +275,7 @@ static const ddc_quirk_map_t ddc_quirks[] = {
 	quirk_dvi_single_link, DDC_QUIRK_DVI_SINGLE_LINK,
 	"Forcing maximum pixel clock to single DVI link."
     },
-    { 
+    {
 	NULL,		DDC_QUIRK_NONE,
 	"No known quirks"
     },
@@ -742,7 +742,7 @@ DDCGuessRangesFromModes(int scrnIndex, MonPtr Monitor, DisplayModePtr Modes)
             Mode->HSync = ((float) Mode->Clock ) / ((float) Mode->HTotal);
 
         if (!Mode->VRefresh)
-            Mode->VRefresh = (1000.0 * ((float) Mode->Clock)) / 
+            Mode->VRefresh = (1000.0 * ((float) Mode->Clock)) /
                 ((float) (Mode->HTotal * Mode->VTotal));
 
         if (Mode->HSync < Monitor->hsync[0].lo)

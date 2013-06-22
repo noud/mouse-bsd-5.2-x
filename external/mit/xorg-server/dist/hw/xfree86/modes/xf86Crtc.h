@@ -102,13 +102,13 @@ typedef struct _xf86CrtcFuncs {
      */
     Bool
     (*lock) (xf86CrtcPtr crtc);
-    
+
     /**
      * Unlock CRTC after mode setting, mostly for DRI
      */
     void
     (*unlock) (xf86CrtcPtr crtc);
-    
+
     /**
      * Callback to adjust the mode to be set in the CRTC.
      *
@@ -152,13 +152,13 @@ typedef struct _xf86CrtcFuncs {
      */
     void *
     (*shadow_allocate) (xf86CrtcPtr crtc, int width, int height);
-    
+
     /**
      * Create shadow pixmap for rotation support
      */
     PixmapPtr
     (*shadow_create) (xf86CrtcPtr crtc, void *data, int width, int height);
-    
+
     /**
      * Destroy shadow pixmap
      */
@@ -200,7 +200,7 @@ typedef struct _xf86CrtcFuncs {
      */
      void
      (*load_cursor_argb) (xf86CrtcPtr crtc, CARD32 *image);
-     
+
     /**
      * Clean up driver-specific bits of the crtc
      */
@@ -234,14 +234,14 @@ struct _xf86Crtc {
      * Associated ScrnInfo
      */
     ScrnInfoPtr	    scrn;
-    
+
     /**
      * Active state of this CRTC
      *
-     * Set when this CRTC is driving one or more outputs 
+     * Set when this CRTC is driving one or more outputs
      */
     Bool	    enabled;
-    
+
     /**
      * Active mode
      *
@@ -253,14 +253,14 @@ struct _xf86Crtc {
     Rotation	    rotation;
     PixmapPtr	    rotatedPixmap;
     void	    *rotatedData;
-    
+
     /**
      * Position on screen
      *
      * Locates this CRTC within the frame buffer
      */
     int		    x, y;
-    
+
     /**
      * Desired mode
      *
@@ -272,7 +272,7 @@ struct _xf86Crtc {
     DisplayModeRec  desiredMode;
     Rotation	    desiredRotation;
     int		    desiredX, desiredY;
-    
+
     /** crtc-specific functions */
     const xf86CrtcFuncsRec *funcs;
 
@@ -300,7 +300,7 @@ struct _xf86Crtc {
      */
     Bool	    cursor_argb;
     /**
-     * Track whether cursor is within CRTC range 
+     * Track whether cursor is within CRTC range
      */
     Bool	    cursor_in_range;
     /**
@@ -499,7 +499,7 @@ struct _xf86Output {
      * Possible outputs to share the same CRTC as a mask of output indices
      */
     CARD32		possible_clones;
-    
+
     /**
      * Whether this output can support interlaced modes
      */
@@ -522,12 +522,12 @@ struct _xf86Output {
      * Options parsed from the related monitor section
      */
     OptionInfoPtr	options;
-    
+
     /**
      * Configured monitor section
      */
     XF86ConfMonitorPtr  conf_monitor;
-    
+
     /**
      * Desired initial position
      */
@@ -563,7 +563,7 @@ struct _xf86Output {
 
     /** driver private information */
     void		*driver_private;
-    
+
     /** Whether to use the old per-screen Monitor config section */
     Bool		use_screen_monitor;
 
@@ -621,7 +621,7 @@ typedef struct _xf86CrtcConfig {
 
     int			minWidth, minHeight;
     int			maxWidth, maxHeight;
-    
+
     /* For crtc-based rotation */
     DamagePtr		rotation_damage;
     Bool		rotation_damage_registered;
@@ -771,7 +771,7 @@ xf86InitialConfiguration (ScrnInfoPtr pScrn, Bool canGrow);
 
 void
 xf86DPMSSet(ScrnInfoPtr pScrn, int PowerManagementMode, int flags);
-    
+
 Bool
 xf86SaveScreen(ScreenPtr pScreen, int mode);
 
@@ -780,7 +780,7 @@ xf86DisableUnusedFunctions(ScrnInfoPtr pScrn);
 
 DisplayModePtr
 xf86OutputFindClosestMode (xf86OutputPtr output, DisplayModePtr desired);
-    
+
 Bool
 xf86SetSingleMode (ScrnInfoPtr pScrn, DisplayModePtr desired, Rotation rotation);
 
@@ -823,7 +823,7 @@ void
 xf86CrtcSetScreenSubpixelOrder (ScreenPtr pScreen);
 
 /*
- * Get a standard string name for a connector type 
+ * Get a standard string name for a connector type
  */
 char *
 xf86ConnectorGetName(xf86ConnectorType connector);
@@ -849,7 +849,7 @@ xf86_cursors_init (ScreenPtr screen, int max_width, int max_height, int flags);
  * Called when anything on the screen is reconfigured.
  *
  * Reloads cursor images as needed, then adjusts cursor positions.
- * 
+ *
  * Driver should call this from crtc commit function.
  */
 void
@@ -891,7 +891,7 @@ xf86_crtc_clip_video_helper(ScrnInfoPtr pScrn,
 			    RegionPtr   reg,
 			    INT32	width,
 			    INT32	height);
-    
+
 xf86_crtc_notify_proc_ptr
 xf86_wrap_crtc_notify (ScreenPtr pScreen, xf86_crtc_notify_proc_ptr new);
 

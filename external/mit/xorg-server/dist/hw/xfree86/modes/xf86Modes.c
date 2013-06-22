@@ -55,7 +55,7 @@ _X_EXPORT double
 xf86ModeHSync(const DisplayModeRec *mode)
 {
     double hsync = 0.0;
-    
+
     if (mode->HSync > 0.0)
 	    hsync = mode->HSync;
     else if (mode->HTotal > 0)
@@ -305,12 +305,12 @@ xf86PrintModeline(int scrnIndex,DisplayModePtr mode)
     char tmp[256];
     char *flags = xnfcalloc(1, 1);
 
-    if (mode->HSkew) { 
-	snprintf(tmp, 256, "hskew %i", mode->HSkew); 
+    if (mode->HSkew) {
+	snprintf(tmp, 256, "hskew %i", mode->HSkew);
 	add(&flags, tmp);
     }
-    if (mode->VScan) { 
-	snprintf(tmp, 256, "vscan %i", mode->VScan); 
+    if (mode->VScan) {
+	snprintf(tmp, 256, "vscan %i", mode->VScan);
 	add(&flags, tmp);
     }
     if (mode->Flags & V_INTERLACE) add(&flags, "interlace");
@@ -618,7 +618,7 @@ static DisplayModePtr
 xf86GetConfigModes (XF86ConfModeLinePtr conf_mode)
 {
     DisplayModePtr  head = NULL, prev = NULL, mode;
-    
+
     for (; conf_mode; conf_mode = (XF86ConfModeLinePtr) conf_mode->list.next)
     {
         mode = xcalloc(1, sizeof(DisplayModeRec));
@@ -663,20 +663,20 @@ xf86GetMonitorModes (ScrnInfoPtr pScrn, XF86ConfMonitorPtr conf_monitor)
 {
     DisplayModePtr	    modes = NULL;
     XF86ConfModesLinkPtr    modes_link;
-    
+
     if (!conf_monitor)
 	return NULL;
 
     /*
      * first we collect the mode lines from the UseModes directive
      */
-    for (modes_link = conf_monitor->mon_modes_sect_lst; 
-	 modes_link; 
+    for (modes_link = conf_monitor->mon_modes_sect_lst;
+	 modes_link;
 	 modes_link = modes_link->list.next)
     {
 	/* If this modes link hasn't been resolved, go look it up now */
 	if (!modes_link->ml_modes)
-	    modes_link->ml_modes = xf86findModes (modes_link->ml_modes_str, 
+	    modes_link->ml_modes = xf86findModes (modes_link->ml_modes_str,
 						  xf86configptr->conf_modes_lst);
 	if (modes_link->ml_modes)
 	    modes = xf86ModesAdd (modes,
@@ -699,7 +699,7 @@ xf86GetDefaultModes (Bool interlaceAllowed, Bool doubleScanAllowed)
     for (i = 0; i < xf86NumDefaultModes; i++)
     {
 	const DisplayModeRec	*defMode = &xf86DefaultModes[i];
-	
+
 	if (!interlaceAllowed && (defMode->Flags & V_INTERLACE))
 	    continue;
 	if (!doubleScanAllowed && (defMode->Flags & V_DBLSCAN))

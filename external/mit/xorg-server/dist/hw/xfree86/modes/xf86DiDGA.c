@@ -50,24 +50,24 @@ xf86_dga_get_modes (ScreenPtr pScreen)
 
     num = 0;
     display_mode = scrn->modes;
-    while (display_mode) 
+    while (display_mode)
     {
 	num++;
 	display_mode = display_mode->next;
 	if (display_mode == scrn->modes)
 	    break;
     }
-    
+
     if (!num)
 	return FALSE;
-    
+
     modes = xalloc(num * sizeof(DGAModeRec));
     if (!modes)
 	return FALSE;
-    
+
     num = 0;
     display_mode = scrn->modes;
-    while (display_mode) 
+    while (display_mode)
     {
 	mode = modes + num++;
 
@@ -117,7 +117,7 @@ xf86_dga_set_mode(ScrnInfoPtr scrn, DGAModePtr display_mode)
     ScreenPtr		pScreen = scrn->pScreen;
     xf86CrtcConfigPtr   xf86_config = XF86_CRTC_CONFIG_PTR(scrn);
 
-    if (!display_mode) 
+    if (!display_mode)
     {
 	if (xf86_config->dga_save_mode)
 	{
@@ -155,9 +155,9 @@ xf86_dga_get_drawable_and_gc (ScrnInfoPtr scrn, DrawablePtr *ppDrawable, GCPtr *
     xf86CrtcConfigPtr   xf86_config = XF86_CRTC_CONFIG_PTR(scrn);
     PixmapPtr		pPixmap;
     GCPtr		pGC;
-    
+
     pPixmap = GetScratchPixmapHeader (pScreen, xf86_config->dga_width, xf86_config->dga_height,
-				      scrn->depth, scrn->bitsPerPixel, xf86_config->dga_stride, 
+				      scrn->depth, scrn->bitsPerPixel, xf86_config->dga_stride,
 				      (char *) scrn->memPhysBase + scrn->fbOffset);
     if (!pPixmap)
 	return FALSE;
@@ -229,7 +229,7 @@ xf86_dga_open_framebuffer(ScrnInfoPtr scrn,
 			  unsigned char **mem, int *size, int *offset, int *flags)
 {
     xf86CrtcConfigPtr   xf86_config = XF86_CRTC_CONFIG_PTR(scrn);
-    
+
     *size = xf86_config->dga_stride * xf86_config->dga_height;
     *mem = (unsigned char *) (xf86_config->dga_address);
     *offset = 0;
@@ -260,10 +260,10 @@ xf86DiDGAReInit (ScreenPtr pScreen)
 {
     ScrnInfoPtr		scrn = xf86Screens[pScreen->myNum];
     xf86CrtcConfigPtr   xf86_config = XF86_CRTC_CONFIG_PTR(scrn);
-    
+
     if (!xf86_dga_get_modes (pScreen))
 	return FALSE;
-    
+
     return DGAReInitModes (pScreen, xf86_config->dga_modes, xf86_config->dga_nmode);
 }
 
@@ -278,9 +278,9 @@ xf86DiDGAInit (ScreenPtr pScreen, unsigned long dga_address)
     xf86_config->dga_width = scrn->virtualX;
     xf86_config->dga_height = scrn->virtualY;
     xf86_config->dga_stride = scrn->displayWidth * scrn->bitsPerPixel >> 3;
-    
+
     if (!xf86_dga_get_modes (pScreen))
 	return FALSE;
-    
+
     return DGAInit(pScreen, &xf86_dga_funcs, xf86_config->dga_modes, xf86_config->dga_nmode);
 }

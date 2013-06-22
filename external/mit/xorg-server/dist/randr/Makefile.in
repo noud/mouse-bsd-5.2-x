@@ -414,7 +414,7 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-librandr.la: $(librandr_la_OBJECTS) $(librandr_la_DEPENDENCIES) 
+librandr.la: $(librandr_la_OBJECTS) $(librandr_la_DEPENDENCIES)
 	$(LINK)  $(librandr_la_OBJECTS) $(librandr_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:

@@ -110,12 +110,12 @@ RRPointerMoved (ScreenPtr pScreen, int x, int y)
     /* Check last known CRTC */
     if (pointerCrtc && RRCrtcContainsPosition (pointerCrtc, x, y))
 	return;
-    
+
     /* Check all CRTCs */
     for (c = 0; c < pScrPriv->numCrtcs; c++)
     {
 	RRCrtcPtr   crtc = pScrPriv->crtcs[c];
-	
+
 	if (RRCrtcContainsPosition (crtc, x, y))
 	{
 	    /* Remember containing CRTC */

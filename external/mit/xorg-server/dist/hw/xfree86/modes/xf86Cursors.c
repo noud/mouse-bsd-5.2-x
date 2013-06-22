@@ -61,7 +61,7 @@ xf86_crtc_rotate_coord (Rotation    rotation,
 			int	    *y_src)
 {
     int t;
-    
+
     switch (rotation & 0xf) {
     case RR_Rotate_0:
 	break;
@@ -101,7 +101,7 @@ xf86_crtc_rotate_coord_back (Rotation    rotation,
 			     int	    *y_src)
 {
     int t;
-    
+
     if (rotation & RR_Reflect_X)
 	x_dst = width - x_dst - 1;
     if (rotation & RR_Reflect_Y)
@@ -176,7 +176,7 @@ set_bit (CARD8 *image, int stride, int flags, int x, int y, Bool mask)
     image += y * stride;
     image[(x >> 3)] |= 1 << (x & 7);
 }
-    
+
 /*
  * Load a two color cursor into a driver that supports only ARGB cursors
  */
@@ -198,7 +198,7 @@ xf86_crtc_convert_cursor_to_argb (xf86CrtcPtr crtc, unsigned char *src)
 #endif
 
     for (y = 0; y < cursor_info->MaxHeight; y++)
-	for (x = 0; x < cursor_info->MaxWidth; x++) 
+	for (x = 0; x < cursor_info->MaxWidth; x++)
 	{
 	    xf86_crtc_rotate_coord (crtc->rotation,
 				    cursor_info->MaxWidth,
@@ -240,7 +240,7 @@ xf86_set_cursor_colors (ScrnInfoPtr scrn, int bg, int fg)
     /* Save ARGB versions of these colors */
     xf86_config->cursor_fg = (CARD32) fg | 0xff000000;
     xf86_config->cursor_bg = (CARD32) bg | 0xff000000;
-    
+
     for (c = 0; c < xf86_config->num_crtc; c++)
     {
 	xf86CrtcPtr crtc = xf86_config->crtc[c];
@@ -280,7 +280,7 @@ xf86_hide_cursors (ScrnInfoPtr scrn)
 	    xf86_crtc_hide_cursor (crtc);
     }
 }
-    
+
 static void
 xf86_crtc_show_cursor (xf86CrtcPtr crtc)
 {
@@ -306,7 +306,7 @@ xf86_show_cursors (ScrnInfoPtr scrn)
 	    xf86_crtc_show_cursor (crtc);
     }
 }
-    
+
 static void
 xf86_crtc_set_cursor_position (xf86CrtcPtr crtc, int x, int y)
 {
@@ -353,7 +353,7 @@ xf86_crtc_set_cursor_position (xf86CrtcPtr crtc, int x, int y)
      */
     in_range = TRUE;
     if (x >= mode->HDisplay || y >= mode->VDisplay ||
-	x <= -cursor_info->MaxWidth || y <= -cursor_info->MaxHeight) 
+	x <= -cursor_info->MaxWidth || y <= -cursor_info->MaxHeight)
     {
 	in_range = FALSE;
 	x = 0;
@@ -361,7 +361,7 @@ xf86_crtc_set_cursor_position (xf86CrtcPtr crtc, int x, int y)
     }
 
     crtc->cursor_in_range = in_range;
-    
+
     if (in_range)
     {
 	crtc->funcs->set_cursor_position (crtc, x, y);
@@ -388,7 +388,7 @@ xf86_set_cursor_position (ScrnInfoPtr scrn, int x, int y)
 	    xf86_crtc_set_cursor_position (crtc, x, y);
     }
 }
-    
+
 /*
  * Load a two-color cursor into a crtc, performing rotation as needed
  */
@@ -412,12 +412,12 @@ xf86_crtc_load_cursor_image (xf86CrtcPtr crtc, CARD8 *src)
     	int xin, yin;
 	int stride = cursor_info->MaxWidth >> 2;
 	int flags = cursor_info->Flags;
-	
+
 	cursor_image = xf86_config->cursor_image;
 	memset(cursor_image, 0, cursor_info->MaxHeight * stride);
-	
+
         for (y = 0; y < cursor_info->MaxHeight; y++)
-	    for (x = 0; x < cursor_info->MaxWidth; x++) 
+	    for (x = 0; x < cursor_info->MaxWidth; x++)
 	    {
 		xf86_crtc_rotate_coord (crtc->rotation,
 					cursor_info->MaxWidth,
@@ -431,7 +431,7 @@ xf86_crtc_load_cursor_image (xf86CrtcPtr crtc, CARD8 *src)
     }
     crtc->funcs->load_cursor_image (crtc, cursor_image);
 }
-    
+
 /*
  * Load a cursor image into all active CRTCs
  */
@@ -466,7 +466,7 @@ xf86_use_hw_cursor (ScreenPtr screen, CursorPtr cursor)
 	FreeCursor (xf86_config->cursor, None);
     xf86_config->cursor = cursor;
     ++cursor->refcnt;
-    
+
     if (cursor->bits->width > cursor_info->MaxWidth ||
 	cursor->bits->height> cursor_info->MaxHeight)
 	return FALSE;
@@ -480,16 +480,16 @@ xf86_use_hw_cursor_argb (ScreenPtr screen, CursorPtr cursor)
     ScrnInfoPtr		scrn = xf86Screens[screen->myNum];
     xf86CrtcConfigPtr   xf86_config = XF86_CRTC_CONFIG_PTR(scrn);
     xf86CursorInfoPtr	cursor_info = xf86_config->cursor_info;
-    
+
     if (xf86_config->cursor)
 	FreeCursor (xf86_config->cursor, None);
     xf86_config->cursor = cursor;
     ++cursor->refcnt;
-    
+
     /* Make sure ARGB support is available */
     if ((cursor_info->Flags & HARDWARE_CURSOR_ARGB) == 0)
 	return FALSE;
-    
+
     if (cursor->bits->width > cursor_info->MaxWidth ||
 	cursor->bits->height> cursor_info->MaxHeight)
 	return FALSE;
@@ -512,7 +512,7 @@ xf86_crtc_load_cursor_argb (xf86CrtcPtr crtc, CursorPtr cursor)
     int			source_height = cursor->bits->height;
     int			image_width = cursor_info->MaxWidth;
     int			image_height = cursor_info->MaxHeight;
-    
+
     for (y = 0; y < image_height; y++)
 	for (x = 0; x < image_width; x++)
 	{
@@ -524,7 +524,7 @@ xf86_crtc_load_cursor_argb (xf86CrtcPtr crtc, CursorPtr cursor)
 		bits = 0;
 	    cursor_image[y * image_width + x] = bits;
 	}
-    
+
     crtc->funcs->load_cursor_argb (crtc, cursor_image);
 }
 
@@ -561,7 +561,7 @@ xf86_cursors_init (ScreenPtr screen, int max_width, int max_height, int flags)
 	xf86DestroyCursorInfoRec (cursor_info);
 	return FALSE;
     }
-	
+
     xf86_config->cursor_info = cursor_info;
 
     cursor_info->MaxWidth = max_width;
@@ -581,10 +581,10 @@ xf86_cursors_init (ScreenPtr screen, int max_width, int max_height, int flags)
 	cursor_info->LoadCursorARGB = xf86_load_cursor_argb;
     }
 #endif
-    
+
     xf86_config->cursor = NULL;
     xf86_hide_cursors (scrn);
-    
+
     return xf86InitCursor (screen, cursor_info);
 }
 
@@ -603,7 +603,7 @@ xf86_reload_cursors (ScreenPtr screen)
     CursorPtr		cursor;
     int			x, y;
     xf86CursorScreenPtr cursor_screen_priv;
-    
+
     /* initial mode setting will not have set a screen yet.
        May be called before the devices are initialised.
      */
@@ -654,7 +654,7 @@ xf86_cursors_fini (ScreenPtr screen)
 {
     ScrnInfoPtr		scrn = xf86Screens[screen->myNum];
     xf86CrtcConfigPtr   xf86_config = XF86_CRTC_CONFIG_PTR(scrn);
-    
+
     if (xf86_config->cursor_info)
     {
 	xf86DestroyCursorInfoRec (xf86_config->cursor_info);

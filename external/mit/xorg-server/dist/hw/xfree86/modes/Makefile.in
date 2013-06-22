@@ -424,7 +424,7 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 
 clean-noinstLIBRARIES:
 	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libxf86modes.a: $(libxf86modes_a_OBJECTS) $(libxf86modes_a_DEPENDENCIES) 
+libxf86modes.a: $(libxf86modes_a_OBJECTS) $(libxf86modes_a_DEPENDENCIES)
 	-rm -f libxf86modes.a
 	$(libxf86modes_a_AR) libxf86modes.a $(libxf86modes_a_OBJECTS) $(libxf86modes_a_LIBADD)
 	$(RANLIB) libxf86modes.a

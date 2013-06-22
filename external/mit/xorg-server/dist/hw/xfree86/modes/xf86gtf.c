@@ -5,11 +5,11 @@
  *
  * Copyright (c) 2001, Andy Ritger  aritger@nvidia.com
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
- * 
+ *
  * o Redistributions of source code must retain the above copyright
  *   notice, this list of conditions and the following disclaimer.
  * o Redistributions in binary form must reproduce the above copyright
@@ -50,7 +50,7 @@
  * of suitability for any purpose. The sample code contained within
  * this standard may be used without restriction.
  *
- * 
+ *
  *
  * The GTF EXCEL(TM) SPREADSHEET, a sample (and the definitive)
  * implementation of the GTF Timing Standard, is available at:
@@ -141,14 +141,14 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
      *
      *  [H PIXELS RND] = ((ROUND([H PIXELS]/[CELL GRAN RND],0))*[CELLGRAN RND])
      */
-    
+
     h_pixels_rnd = rint((float) h_pixels / CELL_GRAN) * CELL_GRAN;
-    
+
     /*  2. If interlace is requested, the number of vertical lines assumed
      *  by the calculation must be halved, as the computation calculates
      *  the number of vertical lines per field. In either case, the
      *  number of lines is rounded to the nearest integer.
-     *   
+     *
      *  [V LINES RND] = IF([INT RQD?]="y", ROUND([V LINES]/2,0),
      *                                     ROUND([V LINES],0))
      */
@@ -156,7 +156,7 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
     v_lines_rnd = interlaced ?
             rint((float) v_lines) / 2.0 :
             rint((float) v_lines);
-    
+
     /*  3. Find the frame rate required:
      *
      *  [V FIELD RATE RQD] = IF([INT RQD?]="y", [I/P FREQ RQD]*2,
@@ -184,7 +184,7 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
     bottom_margin = margins ? rint(MARGIN_PERCENT/100.0 * v_lines_rnd) : (0.0);
 
     /*  6. If interlace is required, then set variable [INTERLACE]=0.5:
-     *   
+     *
      *  [INTERLACE]=(IF([INT RQD?]="y",0.5,0))
      */
 
@@ -214,9 +214,9 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
      *
      *  XXX is "[V SYNC RND]" a typo? should be [V SYNC RQD]?
      */
-    
+
     v_back_porch = vsync_plus_bp - V_SYNC_RQD;
-    
+
     /*  10. Find the total number of lines in Vertical field period:
      *
      *  [TOTAL V LINES] = [V LINES RND] + [TOP MARGIN (LINES)] +
@@ -226,21 +226,21 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
 
     total_v_lines = v_lines_rnd + top_margin + bottom_margin + vsync_plus_bp +
         interlace + MIN_PORCH;
-    
+
     /*  11. Estimate the Vertical field frequency:
      *
      *  [V FIELD RATE EST] = 1 / [H PERIOD EST] / [TOTAL V LINES] * 1000000
      */
 
     v_field_rate_est = 1.0 / h_period_est / total_v_lines * 1000000.0;
-    
+
     /*  12. Find the actual horizontal period:
      *
      *  [H PERIOD] = [H PERIOD EST] / ([V FIELD RATE RQD] / [V FIELD RATE EST])
      */
 
     h_period = h_period_est / (v_field_rate_rqd / v_field_rate_est);
-    
+
     /*  13. Find the actual Vertical field frequency:
      *
      *  [V FIELD RATE] = 1 / [H PERIOD] / [TOTAL V LINES] * 1000000
@@ -266,7 +266,7 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
     left_margin = margins ?
         rint(h_pixels_rnd * MARGIN_PERCENT / 100.0 / CELL_GRAN) * CELL_GRAN :
         0.0;
-    
+
     /*  16. Find number of pixels in right margin:
      *
      *  [RIGHT MARGIN (PIXELS)] = (IF( [MARGINS RQD?]="Y",
@@ -274,11 +274,11 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
      *                   [CELL GRAN RND]),0)) * [CELL GRAN RND],
      *          0))
      */
-    
+
     right_margin = margins ?
         rint(h_pixels_rnd * MARGIN_PERCENT / 100.0 / CELL_GRAN) * CELL_GRAN :
         0.0;
-    
+
     /*  17. Find total number of active pixels in image and left and right
      *  margins:
      *
@@ -287,7 +287,7 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
      */
 
     total_active_pixels = h_pixels_rnd + left_margin + right_margin;
-    
+
     /*  18. Find the ideal blanking duty cycle from the blanking duty cycle
      *  equation:
      *
@@ -295,7 +295,7 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
      */
 
     ideal_duty_cycle = C_PRIME - (M_PRIME * h_period / 1000.0);
-    
+
     /*  19. Find the number of pixels in the blanking time to the nearest
      *  double character cell:
      *
@@ -310,34 +310,34 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
                    ideal_duty_cycle /
                    (100.0 - ideal_duty_cycle) /
                    (2.0 * CELL_GRAN)) * (2.0 * CELL_GRAN);
-    
+
     /*  20. Find total number of pixels:
      *
      *  [TOTAL PIXELS] = [TOTAL ACTIVE PIXELS] + [H BLANK (PIXELS)]
      */
 
     total_pixels = total_active_pixels + h_blank;
-    
+
     /*  21. Find pixel clock frequency:
      *
      *  [PIXEL FREQ] = [TOTAL PIXELS] / [H PERIOD]
      */
-    
+
     pixel_freq = total_pixels / h_period;
-    
+
     /*  22. Find horizontal frequency:
      *
      *  [H FREQ] = 1000 / [H PERIOD]
      */
 
     h_freq = 1000.0 / h_period;
-    
+
 
     /* Stage 1 computations are now complete; I should really pass
        the results to another function and do the Stage 2
        computations, but I only need a few more values so I'll just
        append the computations here for now */
-    
+
 
     /*  17. Find the number of pixels in the horizontal sync period:
      *
@@ -358,9 +358,9 @@ xf86GTFMode(int h_pixels, int v_lines, float freq, int interlaced, int margins)
      *
      *  [V ODD FRONT PORCH(LINES)]=([MIN PORCH RND]+[INTERLACE])
      */
-    
+
     v_odd_front_porch_lines = MIN_PORCH + interlace;
-    
+
     /* finally, pack the results in the mode struct */
 
     mode->HDisplay	= (int) (h_pixels_rnd);
