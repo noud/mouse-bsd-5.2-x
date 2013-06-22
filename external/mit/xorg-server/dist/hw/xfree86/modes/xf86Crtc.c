@@ -2340,6 +2340,9 @@ xf86InitialConfiguration (ScrnInfoPtr scrn, Bool canGrow)
 	xf86DefaultScreenLimits (scrn, &width, &height, canGrow);
 
  LogMessage(X_NOTICE,"xf86InitialConfiguration default limits %d x %d\n",width,height);
+width = 1920 + 1920;
+height = 1200 + 1080 + 1080;
+ LogMessage(X_NOTICE,"xf86InitialConfiguration bashed to %d x %d\n",width,height);
 
 	scrn->display->virtualX = width;
 	scrn->display->virtualY = height;
