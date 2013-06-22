@@ -77,6 +77,8 @@ xf86CrtcSetSizeRange (ScrnInfoPtr scrn,
 {
     xf86CrtcConfigPtr	config = XF86_CRTC_CONFIG_PTR(scrn);
 
+ LogMessage(X_NOTICE,"xf86CrtcSetSizeRange setting [%d..%d] x [%d..%d]\n",minWidth,maxWidth,minHeight,maxHeight);
+
     config->minWidth = minWidth;
     config->minHeight = minHeight;
     config->maxWidth = maxWidth;
@@ -1037,6 +1039,8 @@ xf86DefaultScreenLimits (ScrnInfoPtr scrn, int *widthp, int *heightp,
     if (config->maxHeight && height > config->maxHeight) height = config->maxHeight;
     if (config->minWidth && width < config->minWidth) width = config->minWidth;
     if (config->minHeight && height < config->minHeight) height = config->minHeight;
+ LogMessage(X_NOTICE,"xf86DefaultScreenLimits %d x %d and [%d..%d] x [%d..%d]\n",
+	width,height,config->minWidth,config->maxWidth,config->minHeight,config->maxHeight);
     *widthp = width;
     *heightp = height;
 }
@@ -2225,7 +2229,11 @@ xf86InitialConfiguration (ScrnInfoPtr scrn, Bool canGrow)
     else
 	height = config->maxHeight;
 
+ LogMessage(X_NOTICE,"xf86InitialConfiguration starting with %d x %d\n",width,height);
+
     xf86ProbeOutputModes (scrn, width, height);
+
+ LogMessage(X_NOTICE,"xf86InitialConfiguration num_output is %d\n",config->num_output);
 
     crtcs = xnfcalloc (config->num_output, sizeof (xf86CrtcPtr));
     modes = xnfcalloc (config->num_output, sizeof (DisplayModePtr));
@@ -2321,6 +2329,8 @@ xf86InitialConfiguration (ScrnInfoPtr scrn, Bool canGrow)
 	}
     }
 
+ LogMessage(X_NOTICE,"xf86InitialConfiguration virtual %d x %d\n",scrn->display->virtualX,scrn->display->virtualY);
+
     if (scrn->display->virtualX == 0)
     {
 	/*
@@ -2328,6 +2338,8 @@ xf86InitialConfiguration (ScrnInfoPtr scrn, Bool canGrow)
 	 * switches, if the driver can't enlarge the screen later.
 	 */
 	xf86DefaultScreenLimits (scrn, &width, &height, canGrow);
+
+ LogMessage(X_NOTICE,"xf86InitialConfiguration default limits %d x %d\n",width,height);
 
 	scrn->display->virtualX = width;
 	scrn->display->virtualY = height;
@@ -2350,6 +2362,8 @@ xf86InitialConfiguration (ScrnInfoPtr scrn, Bool canGrow)
      */
     if (!canGrow)
     {
+ LogMessage(X_NOTICE,"xf86InitialConfiguration !canGrow, limiting to %d x %d\n",width,height);
+
 	xf86CrtcSetSizeRange (scrn, config->minWidth, config->minHeight,
 			      width, height);
     }

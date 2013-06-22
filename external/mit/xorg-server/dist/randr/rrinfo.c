@@ -165,6 +165,7 @@ RRScanOldConfig (ScreenPtr pScreen, Rotation rotations)
 	if (height > maxHeight) maxHeight = height;
     }
 
+ LogMessage(X_NOTICE,"RRScanOldConfig calling RRScreenSetSizeRange\n");
     RRScreenSetSizeRange (pScreen, minWidth, minHeight, maxWidth, maxHeight);
 
     /* notice current mode */
@@ -225,13 +226,22 @@ RRScreenSetSizeRange (ScreenPtr	pScreen,
     rrScrPriv (pScreen);
 
     if (!pScrPriv)
+  { LogMessage(X_NOTICE,
+	"RRScreenSetSizeRange: [%d..%d] x [%d..%d]: no private\n",minWidth,maxWidth,minHeight,maxHeight);
 	return;
+  }
     if (pScrPriv->minWidth == minWidth && pScrPriv->minHeight == minHeight &&
 	pScrPriv->maxWidth == maxWidth && pScrPriv->maxHeight == maxHeight)
     {
+      LogMessage(X_NOTICE,
+	"RRScreenSetSizeRange: [%d..%d] x [%d..%d]: no change\n",minWidth,maxWidth,minHeight,maxHeight);
 	return;
     }
 
+ LogMessage(X_NOTICE,
+	"RRScreenSetSizeRange: [%d..%d] x [%d..%d]: changed from [%d..%d] x [%d..%d]\n",
+	minWidth,maxWidth,minHeight,maxHeight,
+	pScrPriv->minWidth,pScrPriv->maxWidth,pScrPriv->minHeight,pScrPriv->maxHeight);
     pScrPriv->minWidth  = minWidth;
     pScrPriv->minHeight = minHeight;
     pScrPriv->maxWidth  = maxWidth;

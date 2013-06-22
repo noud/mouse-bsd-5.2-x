@@ -1536,9 +1536,20 @@ xf86RandR12CreateScreenResources12 (ScreenPtr pScreen)
 	return TRUE;
 #endif
 
+ LogMessage(X_NOTICE,"xf86RandR12CreateScreenResources12 initial size is [%d..%d] x [%d..%d]\n",
+	config->minWidth, config->maxWidth,
+	config->minHeight, config->maxHeight );
+ LogMessage(X_NOTICE,"xf86RandR12CreateScreenResources12 num_crtc=%d\n",config->num_crtc);
     for (c = 0; c < config->num_crtc; c++)
+  {
         xf86RandR12CrtcNotify (config->crtc[c]->randr_crtc);
+    LogMessage(X_NOTICE,"xf86RandR12CreateScreenResources12 CRTC %d size now [%d..%d] x [%d..%d]\n",
+	c,
+	config->minWidth, config->maxWidth,
+	config->minHeight, config->maxHeight );
+  }
 
+ LogMessage(X_NOTICE,"xf86RandR12CreateScreenResources12 calling RRScreenSetSizeRange\n");
     RRScreenSetSizeRange (pScreen, config->minWidth, config->minHeight,
 			  config->maxWidth, config->maxHeight);
     return TRUE;
