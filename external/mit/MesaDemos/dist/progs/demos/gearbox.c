@@ -35,7 +35,7 @@ static GLfloat CubeRot = 0.0;
 /**
   Draw a gear wheel.  You'll probably want to call this function when
   building a display list since we do a lot of trig here.
- 
+
   Input:  inner_radius - radius of hole at center
           outer_radius - radius at center of teeth
           width - width of gear
@@ -289,7 +289,7 @@ draw(void)
 
    /* copy color buffer to texture */
    glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, TexWidth, TexHeight);
-   
+
    /* clear right half of color buffer */
    glViewport(TexWidth, 0, WinWidth - TexWidth, WinHeight);
    glScissor(TexWidth, 0, WinWidth - TexWidth, WinHeight);
@@ -460,7 +460,7 @@ init(int argc, char *argv[])
 }
 
 
-static void 
+static void
 visible(int vis)
 {
   if (vis == GLUT_VISIBLE)

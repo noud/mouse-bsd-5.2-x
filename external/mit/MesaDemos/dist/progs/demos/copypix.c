@@ -1,6 +1,6 @@
 /**
  * glCopyPixels test
- * 
+ *
  * Brian Paul
  * 14 Sep 2007
  */
@@ -54,7 +54,7 @@ static void Display( void )
    glClear( GL_COLOR_BUFFER_BIT );
 
    /* draw original image */
-   glWindowPos2iARB(dx, dy);                    
+   glWindowPos2iARB(dx, dy);
    glDrawPixels(ImgWidth, ImgHeight, ImgFormat, GL_UNSIGNED_BYTE, Image);
 
    if (Scissor)

@@ -1,7 +1,7 @@
 
 /*
  * glDrawPixels demo/test/benchmark
- * 
+ *
  * Brian Paul   September 25, 1997  This file is in the public domain.
  */
 
@@ -311,7 +311,7 @@ static void Usage(void)
    printf("           F  Toggle GL_FOG\n");
    printf("           z  Decrease RasterPos Z\n");
    printf("           Z  Increase RasterPos Z\n");
-   
+
    printf("           f  Toggle front/back buffer drawing\n");
    printf("           b  Benchmark test\n");
    printf("         ESC  Exit\n");

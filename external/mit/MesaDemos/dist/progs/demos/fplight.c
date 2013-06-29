@@ -219,7 +219,7 @@ static void Init( void )
       printf("Sorry, this demo requires GL_NV_fragment_program\n");
       exit(1);
    }
-         
+
 #if defined(GL_NV_fragment_program)
    glGenProgramsNV(1, &FragProg);
    assert(FragProg > 0);

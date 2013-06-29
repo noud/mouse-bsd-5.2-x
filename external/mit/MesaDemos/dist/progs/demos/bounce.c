@@ -32,7 +32,7 @@ GLfloat Xmin = -4.0, Xmax = 4.0;
 GLfloat Ymin = -3.8, Ymax = 4.0;
 GLfloat G = -9.8;
 
-static GLuint 
+static GLuint
 make_ball(void)
 {
   GLuint list;
@@ -81,7 +81,7 @@ make_ball(void)
   return list;
 }
 
-static void 
+static void
 reshape(int width, int height)
 {
   float aspect = (float) width / (float) height;
@@ -102,7 +102,7 @@ key(unsigned char k, int x, int y)
   }
 }
 
-static void 
+static void
 draw(void)
 {
   GLint i;
@@ -145,7 +145,7 @@ draw(void)
   glutSwapBuffers();
 }
 
-static void 
+static void
 idle(void)
 {
   static float vel0 = -100.0;
@@ -181,7 +181,7 @@ idle(void)
   glutPostRedisplay();
 }
 
-static void 
+static void
 visible(int vis)
 {
   if (vis == GLUT_VISIBLE)

@@ -45,11 +45,11 @@
 #define POINT_FILTER	0x00000008
 #define LINEAR_FILTER	0x00000010
 #define GLVERTEX	0x00000020
-#define DRAW_ELTS	0x00000040 
-#define DRAW_ARRAYS	0x00000080 
+#define DRAW_ELTS	0x00000040
+#define DRAW_ARRAYS	0x00000080
 #define ARRAY_ELT	0x00000100
 #define LOCKED	        0x00000200
-#define UNLOCKED	0x00000400 
+#define UNLOCKED	0x00000400
 #define IMMEDIATE	0x00000800
 #define DISPLAYLIST	0x00001000
 #define SHADE_SMOOTH	0x00002000
@@ -144,9 +144,9 @@ static void read_surface( char *filename )
 
 
 
-static void print_flags( const char *msg, GLuint flags ) 
+static void print_flags( const char *msg, GLuint flags )
 {
-   fprintf(stderr, 
+   fprintf(stderr,
 	   "%s (0x%x): %s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s\n",
 	   msg, flags,
 	   (flags & GLVERTEX) ? "glVertex, " : "",
@@ -313,7 +313,7 @@ static void compactify_arrays(void)
    free( ind );
 }
 
-static void expand_arrays(void) 
+static void expand_arrays(void)
 {
    int i;
    int parity = 0;
@@ -370,11 +370,11 @@ static void make_tri_indices( void )
 static void draw_surface( unsigned int with_state )
 {
    GLint i, j;
-   
+
    if (with_state & DISPLAYLIST) {
-      if ((with_state & (RENDER_STYLE_MASK|PRIMITIVE_MASK|MATERIAL_MASK)) != 
+      if ((with_state & (RENDER_STYLE_MASK|PRIMITIVE_MASK|MATERIAL_MASK)) !=
 	  dlist_state) {
-	 /* 
+	 /*
 	  */
 	 fprintf(stderr, "rebuilding displaylist\n");
 
@@ -461,7 +461,7 @@ static void draw_surface( unsigned int with_state )
    case (DRAW_ELTS|POINTS):
       /* can use numuniq with strip_indices as strip_indices[i] == i.
        */
-      glDrawElements( GL_POINTS, numuniq, 
+      glDrawElements( GL_POINTS, numuniq,
 		      GL_UNSIGNED_INT, strip_indices );
       break;
    case (ARRAY_ELT|POINTS):
@@ -521,7 +521,7 @@ static void draw_surface( unsigned int with_state )
       break;
 
    default:
-      fprintf(stderr, "unimplemented mode %x...\n", 
+      fprintf(stderr, "unimplemented mode %x...\n",
 	      (with_state & (RENDER_STYLE_MASK|PRIMITIVE_MASK)));
       break;
    }
@@ -737,7 +737,7 @@ static void ModeMenu(int m)
 
       if ((state & PRIMITIVE_MASK) != STRIPS &&
 	  ((state & RENDER_STYLE_MASK) == DRAW_ELTS ||
-	   (state & RENDER_STYLE_MASK) == ARRAY_ELT || 
+	   (state & RENDER_STYLE_MASK) == ARRAY_ELT ||
 	   (state & PRIMITIVE_MASK) == POINTS))
       {
 	 fprintf(stderr, "enabling small arrays\n");

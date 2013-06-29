@@ -54,7 +54,7 @@ static void Display( void )
 	    glBegin(GL_TRIANGLE_STRIP);
 	    for (x=1.0, u=0.0f; x<Width; x+=xStep, u+=uStep) {
 	       glColor3fv(red);
-	       glTexCoord2f(u, v);	    
+	       glTexCoord2f(u, v);
 	       glVertex2f(x, y);
 	       glColor3fv(blue);
 	       glTexCoord2f(u, v+vStep);
@@ -84,7 +84,7 @@ static void Display( void )
    }
    glFinish();
    t1 = glutGet(GLUT_ELAPSED_TIME) * 0.001;
-   
+
    if (t1-t0 < MinPeriod) {
       /* Next time draw more triangles to get longer elapsed time */
       Loops *= 2;

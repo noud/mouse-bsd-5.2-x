@@ -10,7 +10,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdio.h>
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <string.h>
 #include "readtex.h"
 
@@ -172,7 +172,7 @@ static void RawImageGetRow(rawImageRec *raw, unsigned char *buf, int y, int z)
       fseek(raw->file, (long) raw->rowStart[y+z*raw->sizeY], SEEK_SET);
       fread(raw->tmp, 1, (unsigned int)raw->rowSize[y+z*raw->sizeY],
             raw->file);
-      
+
       iPtr = raw->tmp;
       oPtr = buf;
       while (!done) {
@@ -441,10 +441,10 @@ GLushort *LoadYUVImage( const char *imageFile, GLint *width, GLint *height )
    buffer = (GLushort *) malloc( image->sizeX * image->sizeY * 2 );
 
    if (buffer)
-      ConvertRGBtoYUV( image->sizeX, 
+      ConvertRGBtoYUV( image->sizeX,
 		       image->sizeY,
 		       image->components,
-		       image->data, 
+		       image->data,
 		       buffer );
 
 

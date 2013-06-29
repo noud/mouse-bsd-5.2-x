@@ -210,9 +210,9 @@ static void drawrain(void)
 
   ps->draw();
   ps->addTime(gettimerain());
-  
+
   glShadeModel(GL_FLAT);
- 
+
 
   if((count % FRAME)==0) {
     fr=gettime();
@@ -364,7 +364,7 @@ int main(int ac,char **av)
     fprintf(stderr,"Error opening a window.\n");
     exit(-1);
   }
-  
+
   reshape(WIDTH,HEIGHT);
 
   inittextures();

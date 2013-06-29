@@ -1,8 +1,8 @@
 /*
  * Draw the "fire" test program on the six faces of a cube using
  * fbo render-to-texture.
- * 
- * Much of the code comes from David Bucciarelli's "fire" 
+ *
+ * Much of the code comes from David Bucciarelli's "fire"
  * test program. The rest basically from Brian Paul's "gearbox" and
  * fbotexture programs.
  *
@@ -13,7 +13,7 @@
  * format as a render target, it will usually fall back to software when
  * drawing the "fire" image, and frame-rate should drop considerably.
  *
- * Performance: 
+ * Performance:
  * The rendering speed of this program is usually dictated by fill rate
  * and the fact that software fallbacks for glBitMap makes the driver
  * operate synchronously. Low-end UMA hardware will probably see around
@@ -44,7 +44,7 @@
 
 #define TEXINTFORMAT GL_RGBA
 
-static GLuint texTypes[] = 
+static GLuint texTypes[] =
    {GL_UNSIGNED_BYTE,
     GL_UNSIGNED_INT_8_8_8_8_REV,
     GL_UNSIGNED_SHORT_1_5_5_5_REV,
@@ -63,7 +63,7 @@ static GLuint texTypes[] =
     GL_UNSIGNED_SHORT_5_6_5,
     GL_UNSIGNED_SHORT_5_6_5_REV};
 
-static GLuint texFormats[] = 
+static GLuint texFormats[] =
    {GL_RGBA,
     GL_RGBA,
     GL_RGBA,
@@ -82,7 +82,7 @@ static GLuint texFormats[] =
     GL_BGR,
     GL_BGR};
 
-static const char *texNames[] = 
+static const char *texNames[] =
    {"GL_RGBA GL_UNSIGNED_BYTE",
     "GL_RGBA GL_UNSIGNED_INT_8_8_8_8_REV",
     "GL_RGBA GL_UNSIGNED_SHORT_1_5_5_5_REV",
@@ -567,7 +567,7 @@ drawfire(void)
    printstring(GLUT_BITMAP_HELVETICA_18, texNames[texType]);
    glColor3f(1.0, 0.0, 0.0);
    glRasterPos2i(10, 470);
-   printstring(GLUT_BITMAP_HELVETICA_10, 
+   printstring(GLUT_BITMAP_HELVETICA_10,
 	       "Fire V1.5 Written by David Bucciarelli (tech.hmw@plus.it)");
 
    if (help)
@@ -575,7 +575,7 @@ drawfire(void)
 
    glPopMatrix();
    glDepthMask(GL_TRUE);
-   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);   
+   glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
    Frames++;
 
    {
@@ -588,7 +588,7 @@ drawfire(void)
 	 Frames = 0;
       }
    }
-   
+
 }
 
 static void
@@ -755,7 +755,7 @@ inittree(void)
       } while ((dist < TREEINR) || (dist > TREEOUTR));
 }
 
-static int 
+static int
 init_fire(int ac, char *av[])
 {
    int i;
@@ -935,7 +935,7 @@ reshape(int width, int height)
 }
 
 
-static void 
+static void
 init_fbotexture()
 {
    GLint i;
@@ -1018,7 +1018,7 @@ init(int argc, char *argv[])
 }
 
 
-static void 
+static void
 visible(int vis)
 {
    if (vis == GLUT_VISIBLE)

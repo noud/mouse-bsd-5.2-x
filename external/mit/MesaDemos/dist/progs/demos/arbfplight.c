@@ -272,7 +272,7 @@ static void Init( void )
       printf("Sorry, this demo requires GL_ARB_fragment_program\n");
       exit(1);
    }
-         
+
    /*
     * Get extension function pointers.
     */

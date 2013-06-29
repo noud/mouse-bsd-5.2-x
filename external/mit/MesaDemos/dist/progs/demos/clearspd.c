@@ -198,7 +198,7 @@ int main( int argc, char *argv[] )
       mode |= GLUT_ACCUM;
    if (BufferMask & GL_DEPTH_BUFFER_BIT)
       mode |= GLUT_DEPTH;
-         
+
    glutInitDisplayMode(mode);
 
    glutCreateWindow( argv[0] );

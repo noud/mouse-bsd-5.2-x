@@ -1,7 +1,7 @@
-/*----------------------------- 
+/*-----------------------------
  * stex3d.c GL example of the mesa 3d-texture extention to simulate procedural
  *            texturing, it uses a perlin noise and turbulence functions.
- * 
+ *
  * Author:   Daniel Barrero
  *           barrero@irit.fr
  *           dbarrero@pegasus.uniandes.edu.co
@@ -9,8 +9,8 @@
  * Converted to GLUT by brianp on 1/1/98
  * Massive clean-up on 2002/10/23 by brianp
  *
- *      
- * cc stex3d.c -o stex3d -lglut -lMesaGLU -lMesaGL -lX11 -lXext -lm 
+ *
+ * cc stex3d.c -o stex3d -lglut -lMesaGLU -lMesaGL -lX11 -lXext -lm
  *
  *---------------------------- */
 
@@ -130,7 +130,7 @@ BuildTorus(void)
 
 
 /*--------------------------------------------------------------------
- noise function over R3 - implemented by a pseudorandom tricubic spline 
+ noise function over R3 - implemented by a pseudorandom tricubic spline
               EXCERPTED FROM SIGGRAPH 92, COURSE 23
                         PROCEDURAL MODELING
                              Ken Perlin
@@ -637,7 +637,7 @@ init(void)
 
    /*
       glBlendFunc(GL_SRC_COLOR, GL_SRC_ALPHA);
-      glEnable(GL_BLEND); 
+      glEnable(GL_BLEND);
     */
    glEnable(GL_DEPTH_TEST);
 

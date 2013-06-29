@@ -82,7 +82,7 @@ static void DrawObject(void)
    for (j = 0; j < 4; j++ ) {
       for (i = 0; i < NumUnits; i++) {
          if (TexEnabled[i])
-            glMultiTexCoord2fARB(GL_TEXTURE0_ARB + i, 
+            glMultiTexCoord2fARB(GL_TEXTURE0_ARB + i,
                                  tex_coords[j], tex_coords[j+1]);
       }
       glVertex2f( vtx_coords[j], vtx_coords[j+1] );

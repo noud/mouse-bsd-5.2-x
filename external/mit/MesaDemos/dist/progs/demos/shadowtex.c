@@ -128,7 +128,7 @@ static GLuint DisplayMode;
     "DP3	" dest ".w, " src ", " src ";\n" \
     "RSQ	" dest ".w, " dest ".w;\n" \
     "MUL	" dest ", " src ", " dest ".w;\n"
-   
+
 /**
  * Vertex program for shadow mapping.
  */
@@ -255,7 +255,7 @@ DrawScene(void)
 
 /**
  * Calculate modelview and project matrices for the light
- * 
+ *
  * Stores the results in \c lightProjection (projection matrix) and
  * \c lightModelview (modelview matrix).
  */
@@ -978,9 +978,9 @@ Init(void)
       frag_progs[1] = compile_program(GL_FRAGMENT_PROGRAM_ARB, frag_code);
       max_frag = 2;
    }
-   
+
    if (HaveFP && HaveFP_Shadow) {
-      frag_progs[2] = compile_program(GL_FRAGMENT_PROGRAM_ARB, 
+      frag_progs[2] = compile_program(GL_FRAGMENT_PROGRAM_ARB,
                                       frag_shadow_code);
       max_frag = 3;
    }

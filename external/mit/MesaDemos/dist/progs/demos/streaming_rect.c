@@ -53,7 +53,7 @@ static int min( int a, int b ) { return a < b ? a : b; }
 static void DrawObject()
 {
    GLint size = Width * Height * 4;
-   
+
    if (use_pbo) {
       /* XXX: This is extremely important - semantically makes the buffer
        * contents undefined, but in practice means that the driver can
@@ -65,14 +65,14 @@ static void DrawObject()
 
       {
 	 char *image = glMapBufferARB(GL_PIXEL_UNPACK_BUFFER_EXT, GL_WRITE_ONLY_ARB);
-      
+
 	 printf("char %d\n", (unsigned char)(Drift * 255));
 
 	 memset(image, (unsigned char)(Drift * 255), size);
-      
+
 	 glUnmapBufferARB(GL_PIXEL_UNPACK_BUFFER_EXT);
       }
-   
+
 
       /* BGRA is required for most hardware paths:
        */
@@ -82,7 +82,7 @@ static void DrawObject()
    else {
       static char *image = NULL;
 
-      if (image == NULL) 
+      if (image == NULL)
 	 image = malloc(size);
 
       glBindBufferARB(GL_PIXEL_UNPACK_BUFFER_EXT, 0);

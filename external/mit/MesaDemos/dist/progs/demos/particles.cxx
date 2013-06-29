@@ -162,7 +162,7 @@ void rainParticle::init(void)
 }
 
 rainParticle::rainParticle()
-{ 
+{
   init();
 }
 

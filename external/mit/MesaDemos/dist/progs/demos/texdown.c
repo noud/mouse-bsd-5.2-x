@@ -49,7 +49,7 @@ static GLuint Mode = 0;
 
 /* Try and avoid L2 cache effects by cycling through a small number of
  * textures.
- * 
+ *
  * At the initial size of 1024x1024x4 == 4mbyte, say 8 textures will
  * keep us out of most caches at 32mb total.
  *
@@ -61,7 +61,7 @@ static GLuint Mode = 0;
  *
  * - Should the client texture image be in L2 cache?  Has it just been
  *   generated or read from disk?
- * - Does the application really use >1 texture, or is it constantly 
+ * - Does the application really use >1 texture, or is it constantly
  *   updating one image in-place?
  *
  * Different answers will favour different texture upload mechanisms.
@@ -187,12 +187,12 @@ MeasureDownloadRate(void)
    printf("alloc %p %p\n", orig_texImage, orig_getImage);
 
    texImage = (GLubyte *)align((unsigned long)orig_texImage, ALIGN);
-   getImage = (GLubyte *)align((unsigned long)orig_getImage, ALIGN);   
+   getImage = (GLubyte *)align((unsigned long)orig_getImage, ALIGN);
 
    for (i = 1; !(((unsigned long)texImage) & i); i<<=1)
       ;
    printf("texture image alignment: %d bytes (%p)\n", i, texImage);
-      
+
    for (i = 0; i < bytes; i++) {
       texImage[i] = i & 0xff;
    }
@@ -237,20 +237,20 @@ MeasureDownloadRate(void)
 	  * A bigger question is whether to use a pointer that moves
 	  * with each call, ie does the incoming data come from L2
 	  * cache under normal circumstances, or is it pulled from
-	  * uncached memory?  
-	  * 
+	  * uncached memory?
+	  *
 	  * There's a good argument to say L2 cache, ie you'd expect
 	  * the data to have been recently generated.  It's possible
 	  * that it could have come from a file read, which may or may
 	  * not have gone through the cpu.
 	  */
-         glTexSubImage2D(GL_TEXTURE_2D, 0, 
-			 -TexBorder, 
-			 -TexBorder + offset * h/8, 
-			 w, 
+         glTexSubImage2D(GL_TEXTURE_2D, 0,
+			 -TexBorder,
+			 -TexBorder + offset * h/8,
+			 w,
 			 h/8,
                          FormatTable[Format].Format,
-                         FormatTable[Format].Type, 
+                         FormatTable[Format].Type,
 #if 1
 			 texImage /* likely in L2$ */
 #else
@@ -265,7 +265,7 @@ MeasureDownloadRate(void)
          glTexImage2D(GL_TEXTURE_2D, 0,
                       FormatTable[Format].IntFormat, w, h, TexBorder,
                       FormatTable[Format].Format,
-                      FormatTable[Format].Type, 
+                      FormatTable[Format].Type,
 		      img_ptr);
 	 total += w*h;
       }
@@ -288,8 +288,8 @@ MeasureDownloadRate(void)
    DownloadRate = total / time;
 
 
-   free(orig_texImage); 
-   free(orig_getImage); 
+   free(orig_texImage);
+   free(orig_getImage);
 
    {
       GLint err = glGetError();

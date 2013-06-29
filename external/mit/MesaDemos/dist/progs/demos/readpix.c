@@ -1,7 +1,7 @@
 
 /*
  * glReadPixels and glCopyPixels test
- * 
+ *
  * Brian Paul   March 1, 2000  This file is in the public domain.
  */
 

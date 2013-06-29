@@ -16,7 +16,7 @@
  *
  * This is a very crude demo.  It could be much better.
  */
- 
+
 /*
  * Authors:
  *   Brian Paul
@@ -138,7 +138,7 @@ MakeTable(void)
    /*glMaterialfv( GL_FRONT, GL_EMISSION, gray );*/
    glMaterialfv( GL_FRONT, GL_DIFFUSE, table_mat );
    glMaterialfv( GL_FRONT, GL_AMBIENT, gray );
-   
+
    /* draw textured square for the table */
    glPushMatrix();
    glScalef( 4.0, 4.0, 4.0 );
@@ -215,7 +215,7 @@ InitWindow(struct window *w)
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 
    glShadeModel( GL_FLAT );
-   
+
    glEnable( GL_LIGHT0 );
    glEnable( GL_LIGHTING );
 
@@ -257,7 +257,7 @@ DrawObjects(struct window *w, GLfloat eyex, GLfloat eyey, GLfloat eyez)
       glRotatef( 0.5*w->spin, 0.0, 0.5, 1.0 );
       glCallList( w->objects_list[0] );
       glPopMatrix();
-      
+
       glPushMatrix();
       glTranslatef( -1.0, 0.85+3.0*fabs( cos(0.01*w->spin) ), 0.0 );
       glRotatef( 0.5*w->spin, 0.0, 0.5, 1.0 );
@@ -267,7 +267,7 @@ DrawObjects(struct window *w, GLfloat eyex, GLfloat eyey, GLfloat eyez)
       glPopMatrix();
 #ifndef USE_ZBUFFER
    }
-   else {	
+   else {
       glPushMatrix();
       glTranslatef( -1.0, 0.85+3.0*fabs( cos(0.01*w->spin) ), 0.0 );
       glRotatef( 0.5*w->spin, 0.0, 0.5, 1.0 );
@@ -326,7 +326,7 @@ DrawWindow(void)
    gluLookAt( eyex, eyey, eyez, 0.0, 0.0, 0.0,  0.0, 1.0, 0.0 );
 
    glLightfv( GL_LIGHT0, GL_POSITION, light_pos );
- 
+
    /* draw table into stencil planes */
    glDisable( GL_DEPTH_TEST );
    glEnable( GL_STENCIL_TEST );
@@ -342,7 +342,7 @@ DrawWindow(void)
    /* only draw where stencil==1 */
    if (eyey>0.0) {
       glPushMatrix();
- 
+
       glStencilFunc( GL_EQUAL, 1, 0xffffffff );  /* draw if ==1 */
       glStencilOp( GL_KEEP, GL_KEEP, GL_KEEP );
       glScalef( 1.0, -1.0, 1.0 );
@@ -532,7 +532,7 @@ CreateWindow(void)
 {
    char title[1000];
    struct window *w = (struct window *) calloc(1, sizeof(struct window));
-   
+
    glutInitWindowSize(INIT_WIDTH, INIT_HEIGHT);
    w->id = glutCreateWindow("foo");
    sprintf(title, "reflect window %d", w->id);

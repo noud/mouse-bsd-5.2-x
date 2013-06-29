@@ -4,16 +4,16 @@
  *
  * Converted to GLUT by brianp on 1/1/98
  *
- * This program was inspired on a WindowsNT(R)'s screen saver. It was written 
- * from scratch and it was not based on any other source code. 
- * 
+ * This program was inspired on a WindowsNT(R)'s screen saver. It was written
+ * from scratch and it was not based on any other source code.
+ *
  * Porting it to xlock (the final objective of this code since the moment I
  * decided to create it) was possible by comparing the original Mesa's gear
  * demo with it's ported version, so thanks for Danny Sung for his indirect
  * help (look at gear.c in xlock source tree). NOTE: At the moment this code
  * was sent to Brian Paul for package inclusion, the XLock Version was not
  * available. In fact, I'll wait it to appear on the next Mesa release (If you
- * are reading this, it means THIS release) to send it for xlock package 
+ * are reading this, it means THIS release) to send it for xlock package
  * inclusion). It will probably there be a GLUT version too.
  *
  * Thanks goes also to Brian Paul for making it possible and inexpensive
@@ -24,7 +24,7 @@
  *
  * My e-mail addresses are
  *
- * vianna@cat.cbpf.br 
+ * vianna@cat.cbpf.br
  *         and
  * marcelo@venus.rdc.puc-rio.br
  *
@@ -33,13 +33,13 @@
 
 /*
 This document is VERY incomplete, but tries to describe the mathematics used
-in the program. At this moment it just describes how the polyhedra are 
+in the program. At this moment it just describes how the polyhedra are
 generated. On futhurer versions, this document will be probabbly improved.
 
 Since I'm not a native english speaker, my apologies for any gramatical
 mistake.
 
-Marcelo Fernandes Vianna 
+Marcelo Fernandes Vianna
 - Undergraduate in Computer Engeneering at Catholic Pontifical University
 - of Rio de Janeiro (PUC-Rio) Brasil.
 - e-mail: vianna@cat.cbpf.br or marcelo@venus.rdc.puc-rio.br
@@ -48,19 +48,19 @@ Marcelo Fernandes Vianna
 POLYHEDRA GENERATION
 
 For the purpose of this program it's not sufficient to know the polyhedra
-vertexes coordinates. Since the morphing algorithm applies a nonlinear 
+vertexes coordinates. Since the morphing algorithm applies a nonlinear
 transformation over the surfaces (faces) of the polyhedron, each face has
-to be divided into smaller ones. The morphing algorithm needs to transform 
+to be divided into smaller ones. The morphing algorithm needs to transform
 each vertex of these smaller faces individually. It's a very time consoming
 task.
 
 In order to reduce calculation overload, and since all the macro faces of
-the polyhedron are transformed by the same way, the generation is made by 
+the polyhedron are transformed by the same way, the generation is made by
 creating only one face of the polyhedron, morphing it and then rotating it
-around the polyhedron center. 
+around the polyhedron center.
 
-What we need to know is the face radius of the polyhedron (the radius of 
-the inscribed sphere) and the angle between the center of two adjacent 
+What we need to know is the face radius of the polyhedron (the radius of
+the inscribed sphere) and the angle between the center of two adjacent
 faces using the center of the sphere as the angle's vertex.
 
 The face radius of the regular polyhedra are known values which I decided
@@ -89,7 +89,7 @@ and sqrt(3)/2 for the other two other edges. So the angle we want is:
      +-----------------------------------------------------------+
 For the cube this angle is obvious, but just for formality it can be
 easily obtained because we also know it's isosceles edge lenghts:
-sqrt(2)/2 for the base and 1/2 for the other two edges. So the angle we 
+sqrt(2)/2 for the base and 1/2 for the other two edges. So the angle we
 want is:
      +-----------------------------------------------------------+
      | 2*ARCSIN((sqrt(2)/2)/1)   = 90.000000000000000000 degrees |
@@ -110,8 +110,8 @@ Edge radius:
   (VRp is the pentagon's vertex radio).
   Face Radius For Dodecahedron
   FRd = T^2 * sqrt((T+2)/5) / 2 = 1.1135163644116068404
-Why we need ERp? Well, ERp and FRd segments forms a 90 degrees angle, 
-completing this triangle, the lesser angle is a half of the angle we are 
+Why we need ERp? Well, ERp and FRd segments forms a 90 degrees angle,
+completing this triangle, the lesser angle is a half of the angle we are
 looking for, so this angle is:
      +-----------------------------------------------------------+
      | 2*ARCTAN(ERp/FRd)	 = 63.434948822922009981 degrees |
@@ -887,5 +887,5 @@ int main(int argc, char **argv)
   glutIdleFunc( idle_ );
   glutDisplayFunc( draw );
   glutMainLoop();
-  
+
 }

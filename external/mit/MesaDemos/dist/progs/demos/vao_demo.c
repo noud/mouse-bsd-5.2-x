@@ -292,7 +292,7 @@ static void Init( void )
    assert(is_vertex_array);
 
    glEnable( GL_DEPTH_TEST );
-   
+
    (*gen_vertex_arrays)( 1, & cube_array_obj );
    (*bind_vertex_array)( cube_array_obj );
    glVertexPointer( 4, GL_FLOAT, sizeof(GLfloat) * 4, cube_vert);

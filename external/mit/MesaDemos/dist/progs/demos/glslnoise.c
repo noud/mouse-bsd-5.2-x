@@ -152,7 +152,7 @@ static void Init (void)
  	glLinkProgramARB = (PFNGLLINKPROGRAMARBPROC)
 		GETPROCADDRESS ("glLinkProgramARB");
  	glUseProgramObjectARB = (PFNGLUSEPROGRAMOBJECTARBPROC)
-		GETPROCADDRESS("glUseProgramObjectARB");          
+		GETPROCADDRESS("glUseProgramObjectARB");
 
 	glGetUniformLocationARB = (PFNGLGETUNIFORMLOCATIONARBPROC)
 		GETPROCADDRESS("glGetUniformLocationARB");

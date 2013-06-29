@@ -1053,7 +1053,7 @@ main (int argc, char *argv[])
     else
        file = argv[1];
 
-    glutInit(&argc, argv); 
+    glutInit(&argc, argv);
     glutInitWindowPosition (0, 0);
     glutInitWindowSize(640,480);
     glutInitDisplayMode (GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE );
