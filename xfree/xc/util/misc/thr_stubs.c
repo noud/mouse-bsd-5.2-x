@@ -5,8 +5,8 @@
  *
  * One workaround is to include this stub routine when you link.
  *
- * These routines don't need to have accurate interfaces -- they will 
- * never be called. They just need to be there in order to be resolved 
+ * These routines don't need to have accurate interfaces -- they will
+ * never be called. They just need to be there in order to be resolved
  * at link time by non-threaded programs.
  */
 

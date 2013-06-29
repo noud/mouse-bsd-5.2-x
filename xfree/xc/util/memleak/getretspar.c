@@ -48,7 +48,7 @@ getStackTrace (results, max)
 
     flushWindows (32);
     sp = getFramePointer ();
-    while (max) 
+    while (max)
     {
 	/* sparc stack traces are easy -- chain up the saved FP/SP values */
 	ra = (unsigned long *) sp[15];

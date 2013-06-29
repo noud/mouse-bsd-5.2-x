@@ -14,26 +14,26 @@ public:
    virtual void   AttachedToWindow(void);
    virtual void   FrameResized(float newWidth, float newHeight);
    virtual void   ErrorCallback(GLenum which);
-   
+
    void         Render(void);
-   
+
 private:
    void         gInit(void);
    void         gDraw(void);
    void         gReshape(int width, int height);
-         
+
    float         width;
    float         height;
 };
 
 
 
-class SampleGLWindow : public BWindow 
+class SampleGLWindow : public BWindow
 {
 public:
    SampleGLWindow(BRect frame, uint32 type);
    virtual bool   QuitRequested() { be_app->PostMessage(B_QUIT_REQUESTED); return true; }
-   
+
 private:
    SampleGLView   *theView;
 };
@@ -90,7 +90,7 @@ void SampleGLView::AttachedToWindow(void)
 }
 
 
-void SampleGLView::FrameResized(float newWidth, float newHeight) 
+void SampleGLView::FrameResized(float newWidth, float newHeight)
 {
    BGLView::FrameResized(newWidth, newHeight);
 
@@ -98,15 +98,15 @@ void SampleGLView::FrameResized(float newWidth, float newHeight)
 
    width = newWidth;
    height = newHeight;
-   
+
    gReshape(width,height);
-      
+
    UnlockGL();
    Render();
 }
 
 
-void SampleGLView::ErrorCallback(GLenum whichError) 
+void SampleGLView::ErrorCallback(GLenum whichError)
 {
 //      fprintf(stderr, "Unexpected error occured (%d):\\n", whichError);
 //      fprintf(stderr, "    %s\\n", gluErrorString(whichError));
@@ -119,7 +119,7 @@ GLenum use_stipple_mode;    // GL_TRUE to use dashed lines
 GLenum use_smooth_mode;     // GL_TRUE to use anti-aliased lines
 GLint linesize;             // Line width
 GLint pointsize;            // Point diameter
-   
+
 float pntA[3] = {
    -160.0, 0.0, 0.0
 };
@@ -129,7 +129,7 @@ float pntB[3] = {
 
 
 
-void SampleGLView::gInit(void) 
+void SampleGLView::gInit(void)
 {
    glClearColor(0.0, 0.0, 0.0, 0.0);
    glLineStipple(1, 0xF0E0);
@@ -145,10 +145,10 @@ void SampleGLView::gInit(void)
 void SampleGLView::gDraw(void)
 {
    GLint i;
-   
+
    glClear(GL_COLOR_BUFFER_BIT);
    glLineWidth(linesize);
-   
+
 /*
 
    if (use_stipple_mode) {
@@ -162,7 +162,7 @@ void SampleGLView::gDraw(void)
 
 
    glPushMatrix();
-   
+
    glPointSize(pointsize);         // Set size for point
 
    for (i = 0; i < 360; i += 5) {
@@ -191,7 +191,7 @@ void SampleGLView::gDraw(void)
       	glVertex3fv(pntB);         // Draw point at other end
       glEnd();
    }
-   
+
    glPopMatrix();                  // Done with matrix
 }
 

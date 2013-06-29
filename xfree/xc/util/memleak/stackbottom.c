@@ -38,7 +38,7 @@ void GC_noop() {}
 #   define MIN_PAGE_SIZE 256	/* Smallest conceivable page size, bytes */
 #   include <setjmp.h>
     /* static */ jmp_buf GC_jmp_buf;
-    
+
     /*ARGSUSED*/
     void GC_fault_handler(sig)
     int sig;

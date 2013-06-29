@@ -177,7 +177,7 @@ getStackTrace (results, max)
 	    rc->spAdjust = sp_adjust;
 	}
 	/* if something went wrong, punt */
-	if (rc->spAdjust <= 0) 
+	if (rc->spAdjust <= 0)
 	{
 	    *results++ = 0;
 	    break;

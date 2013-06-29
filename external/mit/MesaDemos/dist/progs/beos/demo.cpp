@@ -41,7 +41,7 @@ MyWindow::MyWindow(BRect frame)
    // Make OpenGL view and put it in the window
    BRect r = Bounds();
    r.InsetBy(5, 5);
-   
+
    MyGL *gl = new MyGL(r, "GL", BGL_RGB | BGL_DOUBLE);
    AddChild(gl);
    SetPulseRate(1000000 / 30);
@@ -97,7 +97,7 @@ void MyGL::Render()
     LockGL();
 
     glClear(GL_COLOR_BUFFER_BIT);
-    
+
     glPushMatrix();
 
     glRotated(mAngle, 0, 0, 1);

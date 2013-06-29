@@ -20,12 +20,12 @@
 #endif
 
 
-class GLInfoWindow : public BWindow 
+class GLInfoWindow : public BWindow
 {
 public:
    GLInfoWindow(BRect frame);
    virtual bool   QuitRequested() { be_app->PostMessage(B_QUIT_REQUESTED); return true; }
-   
+
 private:
 	BGLView 			*gl;
 	BOutlineListView	*list;
@@ -60,18 +60,18 @@ GLInfoWindow::GLInfoWindow(BRect frame)
 	list 		= new BOutlineListView(r, "GLInfoList", B_SINGLE_SELECTION_LIST, B_FOLLOW_ALL_SIDES);
 	scroller 	= new BScrollView("GLInfoListScroller", list, B_FOLLOW_ALL_SIDES,
 						B_WILL_DRAW | B_FRAME_EVENTS, false, true);
-						
+
 	gl = new BGLView(r, "opengl", B_FOLLOW_ALL_SIDES, 0, BGL_RGB | BGL_DOUBLE);
 	gl->Hide();
 	AddChild(gl);
 	AddChild(scroller);
-	
+
 	Show();
-	
+
 	LockLooper();
-	
+
 	// gl->LockGL();
-	
+
 	list->AddItem(new BStringItem("OpenGL", 0));
 
 	s = (char *) glGetString(GL_VENDOR);
@@ -85,7 +85,7 @@ GLInfoWindow::GLInfoWindow(BRect frame)
 		l = ""; l << "Version: " << s;
 		list->AddItem(new BStringItem(l.String(), 1));
 	}
-	
+
 	s = (char *) glGetString(GL_RENDERER);
 	if (s) {
 		l = ""; l << "Renderer Name: " << s;

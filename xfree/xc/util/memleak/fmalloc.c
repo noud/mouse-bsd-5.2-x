@@ -129,7 +129,7 @@ typedef mem		*tree_data;
 			(((a)->actualSize op (b)->actualSize) || \
 			 ((a)->actualSize == (b)->actualSize && \
 			  COMPARE_ADDR(a,b,op))))
-				
+
 
 #define LESS_THAN(a,b,s)    COMPARE(a,b,<,s)
 #define GREATER_THAN(a,b,s) COMPARE(a,b,>,s)
@@ -142,7 +142,7 @@ typedef mem		*tree_data;
     else \
 	break; \
 }
-    
+
 
 static tree	*activeMemory, *freedMemory, *deadMemory;
 
@@ -210,7 +210,7 @@ MemError (s, h, ourRet)
 	fprintf(stderr,"\n");
 #endif
     }
-    else 
+    else
 	fprintf (stderr, "%s\n", s);
 #ifdef HAS_GET_RETURN_ADDRESS
     if (ourRet)
@@ -258,7 +258,7 @@ MarkActiveBlock (p, from)
 	    h->from = from;
 #ifdef HAS_GET_RETURN_ADDRESS
 	    SEARCH(activeMemory, hh, h->from)
-	      if (hh) 
+	      if (hh)
 		h->fromReturnStack = hh->returnStack;
 #endif
 	    if (!oldMarked)
@@ -278,7 +278,7 @@ MarkActiveBlock (p, from)
 	    h->from = from;
 #ifdef HAS_GET_RETURN_ADDRESS
 	    SEARCH(activeMemory, hh, h->from)
-            if (hh) 
+            if (hh)
 		h->fromReturnStack = hh->returnStack;
 #endif
 	}
@@ -317,7 +317,7 @@ SweepActiveTree (t)
 
 /*
  * run a thread through the tree at the same time
- * - the thread runs 
+ * - the thread runs
  *
  * root -> left_child ... -> right_child ... -> null
  */
@@ -366,7 +366,7 @@ SweepFreedMemory ()
     for (t = freedMemory; t; t = n) {
 	n = t->next;
 	count++;
-	if (!t->marked) 
+	if (!t->marked)
 	{
 	    (void) tree_delete (&freedMemory, t, FALSE);
 	    freedMemoryTotal -= t->desiredsize;
@@ -536,7 +536,7 @@ WarnReferenced(from, to)
     WarnReferencedTree(activeMemory,from,to);
     WarnReferencedRange(BOTTOM_OF_DATA, endOfStaticMemory,from,to);
     WarnReferencedRange(&foo, TOP_OF_STACK,from,to);
-}  
+}
 #endif
 /*
  * Entry points:
@@ -574,7 +574,7 @@ CheckMemory ()
     SweepFreedMemory ();
     fprintf (stderr, "%d bytes freed memory still held from %d allocations\n",
 	     freedMemoryTotal, freedMemoryCount);
-    fprintf (stderr, 
+    fprintf (stderr,
 	   "%d bytes of allocated memory not referenced from %d allocations\n",
 	     unreferencedAllocatedTotal,unreferencedAllocatedCount);
     deadMemoryTotal = freedMemoryTotal;
@@ -649,7 +649,7 @@ malloc (desiredsize)
 	    h = h->left;
 	}
     }
-    if (h) 
+    if (h)
     {
 	tree_delete (&deadMemory, h, TRUE);
     }
@@ -682,7 +682,7 @@ free (p)
 {
     HeadPtr	h;
     static int	beenHere;
-    
+
 #ifndef NO_ATEXIT
     /* do it at free instead of malloc to avoid recursion? */
     if (!beenHere)
@@ -866,7 +866,7 @@ int	bySize;
 	}
 	/*NOTREACHED*/
 }
-					
+
 /*
  * delete a node from a tree
  *
@@ -930,7 +930,7 @@ int	bySize;
 			(*treep) = to_be_deleted->right;
 			return 1;
 		} else {
-		/* 
+		/*
 		 * if both down pointers are full, then
 		 * move a node from the bottom of the tree up here.
 		 *
@@ -967,7 +967,7 @@ int	bySize;
 			/*
 			 * swap the replacement node into
 			 * the tree where the node is to be removed
-			 * 
+			 *
 			 * this would be faster if only the data
 			 * element was swapped -- but that
 			 * won't work for findleak.  The alternate
@@ -1047,7 +1047,7 @@ int	bySize;
  * balance after insertion can never actually shorten
  * the tree.
  */
- 
+
 static
 rebalance_right (treep)
 tree	**treep;
@@ -1057,7 +1057,7 @@ tree	**treep;
 	 * rebalance the tree
 	 */
 	if ((*treep)->right->balance == -1) {
-		/* 
+		/*
 		 * double whammy -- the inner sub-sub tree
 		 * is longer than the outer sub-sub tree
 		 *
@@ -1094,7 +1094,7 @@ tree	**treep;
 		 * a simple single rotation
 		 *
 		 * Scheme:  replace the tree top node
-		 * with the sub-tree top node 
+		 * with the sub-tree top node
 		 */
 		temp = (*treep)->right->left;
 		(*treep)->right->left = (*treep);
@@ -1129,7 +1129,7 @@ tree	**treep;
 	 * rebalance the tree
 	 */
 	if ((*treep)->left->balance == 1) {
-		/* 
+		/*
 		 * double whammy -- the inner sub-sub tree
 		 * is longer than the outer sub-sub tree
 		 *
@@ -1166,7 +1166,7 @@ tree	**treep;
 		 * a simple single rotation
 		 *
 		 * Scheme:  replace the tree top node
-		 * with the sub-tree top node 
+		 * with the sub-tree top node
 		 */
 		temp = (*treep)->left->right;
 		(*treep)->left->right = (*treep);
@@ -1194,7 +1194,7 @@ tree	**treep;
 
 #ifdef DEBUG
 
-static 
+static
 depth (treep)
 tree	*treep;
 {

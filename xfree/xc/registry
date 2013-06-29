@@ -2,9 +2,9 @@
 
 				  X Registry
 
-The X.Org Group is maintaining a registry of certain X-related 
-items, to aid in avoiding conflicts and to aid in sharing of such items.  
-Requests to register items, or questions about registration, should be 
+The X.Org Group is maintaining a registry of certain X-related
+items, to aid in avoiding conflicts and to aid in sharing of such items.
+Requests to register items, or questions about registration, should be
 addressed to
 	xregistry@x.org
 or to
@@ -302,7 +302,7 @@ Name						Reference
 "XDM-AUTHORIZATION-1"				[8], [11]
 
 4. VENDOR STRING FORMATS
-      
+
 See Section 8 of the protocol.
 
 String						Reference
@@ -1225,7 +1225,7 @@ REFERENCES
 	Mountain View, CA 94039-7900
 
 [43]	(Originally Dave Cassing)
-	X Strategy Team 
+	X Strategy Team
 	Tektronix, Inc.
 	PO Box 1000
 	Wilsonville, Oregon 97070-1000
@@ -1626,7 +1626,7 @@ REFERENCES
 	Fax: +7 (095) 939-0300
 	E-mail: info@cronyx.ru
 
-[121]	Sun Microsystems Federal, Inc.  Trusted Solaris Extension, 
+[121]	Sun Microsystems Federal, Inc.  Trusted Solaris Extension,
 	(Originally Milind Pansare)
 	See Reference [57]
 
@@ -1675,7 +1675,7 @@ REFERENCES
 	The X.Org Group
 	See Reference [8]
 
-[133]	ISO10646 Information technology -- Universal Multiple-Octet Coded 
+[133]	ISO10646 Information technology -- Universal Multiple-Octet Coded
 	Character Set (UCS), part 1
 	Markus G. Kuhn
 	University of Cambridge
