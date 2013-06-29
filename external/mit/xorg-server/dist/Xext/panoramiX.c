@@ -453,11 +453,14 @@ void PanoramiXExtensionInit(int argc, char *argv[])
     ScreenPtr		pScreen = screenInfo.screens[0];
     PanoramiXScreenPtr	pScreenPriv;
 
+LogMessage(X_NOTICE,"Doing PanoramiX init, noPanoramiXExtension = %d\n",noPanoramiXExtension);
+
     if (noPanoramiXExtension) 
 	return;
 
     PanoramiXNumScreens = screenInfo.numScreens;
     if (PanoramiXNumScreens == 1) {		/* Only 1 screen 	*/
+LogMessage(X_NOTICE,"Disabling PanoramiX, NumScreens==1\n");
 	noPanoramiXExtension = TRUE;
 	return;
     }
@@ -481,6 +484,7 @@ void PanoramiXExtensionInit(int argc, char *argv[])
         BREAK_IF(!panoramiXdataPtr);
 
 	if (!dixRequestPrivate(PanoramiXGCKey, sizeof(PanoramiXGCRec))) {
+LogMessage(X_NOTICE,"Disabling PanoramiX, dixRequestPrivate failed\n");
 		noPanoramiXExtension = TRUE;
 		return;
 	}
@@ -491,6 +495,7 @@ void PanoramiXExtensionInit(int argc, char *argv[])
 	   dixSetPrivate(&pScreen->devPrivates, PanoramiXScreenKey,
 			 pScreenPriv);
 	   if(!pScreenPriv) {
+LogMessage(X_NOTICE,"Disabling PanoramiX, no pScreenPriv (%d/%d)\n",i,PanoramiXNumScreens);
 		noPanoramiXExtension = TRUE;
 		return;
 	   }
@@ -515,6 +520,7 @@ void PanoramiXExtensionInit(int argc, char *argv[])
     }
 
     if (!success) {
+LogMessage(X_NOTICE,"Disabling PanoramiX, success is false\n");
 	noPanoramiXExtension = TRUE;
 	ErrorF(PANORAMIX_PROTOCOL_NAME " extension failed to initialize\n");
 	return;

@@ -1104,6 +1104,7 @@ configServerFlags(XF86ConfFlagsPtr flagsconf, XF86OptionPtr layoutopts)
     if (!noPanoramiXExtension)
       from = X_CMDLINE;
     else if (xf86GetOptValBool(FlagOptions, FLAG_XINERAMA, &value)) {
+LogMessage(X_NOTICE,"%s PanoramiX, from config\n",value?"Enabling":"Disabling");
       noPanoramiXExtension = !value;
       from = X_CONFIG;
     }

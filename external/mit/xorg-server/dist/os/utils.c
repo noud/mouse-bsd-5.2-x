@@ -882,9 +882,11 @@ ProcessCommandLine(int argc, char *argv[])
          }
 #ifdef PANORAMIX
 	else if ( strcmp( argv[i], "+xinerama") == 0){
+LogMessage(X_NOTICE,"Enabling PanoramiX, command line\n");
 	    noPanoramiXExtension = FALSE;
 	}
 	else if ( strcmp( argv[i], "-xinerama") == 0){
+LogMessage(X_NOTICE,"Disabling PanoramiX, command line\n");
 	    noPanoramiXExtension = TRUE;
 	}
 	else if ( strcmp( argv[i], "-disablexineramaextension") == 0){
