@@ -2863,8 +2863,9 @@ ProcCreateCursor (ClientPtr client)
     }
     else if (  src->drawable.width != msk->drawable.width
 	    || src->drawable.height != msk->drawable.height
-	    || src->drawable.depth != 1
 	    || msk->drawable.depth != 1)
+	return (BadMatch);
+    if (src->drawable.depth != 1)
 	return (BadMatch);
 
     width = src->drawable.width;
