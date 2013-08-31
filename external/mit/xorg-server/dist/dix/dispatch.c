@@ -2890,9 +2890,17 @@ ProcCreateCursor (ClientPtr client)
 					 XYPixmap, 1, (pointer)srcbits);
     if ( msk == (PixmapPtr)NULL)
     {
-	unsigned char *bits = mskbits;
-	while (--n >= 0)
-	    *bits++ = ~0;
+      register int y;
+      register int x;
+      register int w;
+      w = BitmapBytePad(width);
+      for (y=height-1;y>=0;y--)
+       { for (x=(w*8)-1;x>=0;x--)
+	  { if (x < width)
+	     { mskbits[(y*w)+(x>>3)] |= 1 << (x & 7);
+	     }
+	  }
+       }
     }
     else
     {
