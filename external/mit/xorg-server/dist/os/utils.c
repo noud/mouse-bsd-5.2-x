@@ -192,6 +192,7 @@ _X_EXPORT Bool noDRI2Extension = FALSE;
 #endif
 
 _X_EXPORT Bool noGEExtension = FALSE;
+_X_EXPORT int noaccel = 0;
 
 #define X_INCLUDE_NETDB_H
 #include <X11/Xos_r.h>
@@ -889,6 +890,8 @@ LogMessage(X_NOTICE,"Enabling PanoramiX, command line\n");
 LogMessage(X_NOTICE,"Disabling PanoramiX, command line\n");
 	    noPanoramiXExtension = TRUE;
 	}
+	else if ( strcmp( argv[i], "-noaccel") == 0)
+	    noaccel = 1;
 	else if ( strcmp( argv[i], "-disablexineramaextension") == 0){
 	    PanoramiXExtensionDisabledHack = TRUE;
 	}

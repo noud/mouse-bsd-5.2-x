@@ -49,6 +49,8 @@ static DevPrivateKey XAAGCKey = &XAAGCKeyIndex;
 static int XAAPixmapKeyIndex;
 static DevPrivateKey XAAPixmapKey = &XAAPixmapKeyIndex;
 
+extern int noaccel;
+
 DevPrivateKey XAAGetScreenKey(void) {
     return XAAScreenKey;
 }
@@ -105,7 +107,7 @@ XAAInit(ScreenPtr pScreen, XAAInfoRecPtr infoRec)
 #endif
 
     /* Return successfully if no acceleration wanted */
-    if (!infoRec)
+    if (!infoRec || noaccel)
 	return TRUE;
     
     if (!dixRequestPrivate(XAAGCKey, sizeof(XAAGCRec)))
