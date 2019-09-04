@@ -1,12 +1,11 @@
-
 /*
  *                   XFree86 vbe module
  *               Copyright 2000 Egbert Eich
  *
- * The mode query/save/set/restore functions from the vesa driver 
+ * The mode query/save/set/restore functions from the vesa driver
  * have been moved here.
  * Copyright (c) 2000 by Conectiva S.A. (http://www.conectiva.com)
- * Authors: Paulo César Pereira de Andrade <pcpa@conectiva.com.br> 
+ * Authors: Paulo César Pereira de Andrade <pcpa@conectiva.com.br>
  */
 
 #ifdef HAVE_XORG_CONFIG_H
@@ -24,7 +23,7 @@
 #define VERSION(x) VBE_VERSION_MAJOR(x),VBE_VERSION_MINOR(x)
 
 #if X_BYTE_ORDER == X_LITTLE_ENDIAN
-#define B_O16(x)  (x) 
+#define B_O16(x)  (x)
 #define B_O32(x)  (x)
 #else
 #define B_O16(x)  ((((x) & 0xff) << 8) | (((x) & 0xff) >> 8))
@@ -60,7 +59,7 @@ VBEExtendedInit(xf86Int10InfoPtr pInt, int entityIndex, int Flags)
 
     if (!pScrn) return NULL;
     screen = pScrn->scrnIndex;
-    
+
     if (!pInt) {
 	if (!xf86LoadSubModule(pScrn, "int10"))
 	    goto error;
@@ -71,24 +70,24 @@ VBEExtendedInit(xf86Int10InfoPtr pInt, int entityIndex, int Flags)
 	    goto error;
 	init_int10 = TRUE;
     }
-    
+
     page = xf86Int10AllocPages(pInt,1,&RealOff);
     if (!page) goto error;
-    vbe = (vbeControllerInfoPtr) page;    
+    vbe = (vbeControllerInfoPtr) page;
     memcpy(vbe->VbeSignature,vbeVersionString,4);
 
     pInt->ax = 0x4F00;
     pInt->es = SEG_ADDR(RealOff);
     pInt->di = SEG_OFF(RealOff);
     pInt->num = 0x10;
-    
+
     xf86ExecX86int10(pInt);
 
     if ((pInt->ax & 0xff) != 0x4f) {
 	xf86DrvMsgVerb(screen,X_INFO,3,"VESA BIOS not detected\n");
 	goto error;
     }
-    
+
     switch (pInt->ax & 0xff00) {
     case 0:
 	xf86DrvMsg(screen,X_INFO,"VESA BIOS detected\n");
@@ -106,7 +105,7 @@ VBEExtendedInit(xf86Int10InfoPtr pInt, int entityIndex, int Flags)
 	xf86DrvMsg(screen,X_INFO,"Invalid\n");
 	goto error;
     }
-    
+
     xf86DrvMsgVerb(screen, X_INFO, 4,
 		"VbeVersion is %d, OemStringPtr is 0x%08lx,\n"
 		"\tOemVendorNamePtr is 0x%08lx, OemProductNamePtr is 0x%08lx,\n"
@@ -122,7 +121,7 @@ VBEExtendedInit(xf86Int10InfoPtr pInt, int entityIndex, int Flags)
 		   vbe->TotalMem * 64);
     xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE OEM: %s\n",
 		   (CARD8*)xf86int10Addr(pInt,L_ADD(vbe->OemStringPtr)));
-    
+
     if (B_O16(vbe->VbeVersion) >= 0x200) {
 	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE OEM Software Rev: %i.%i\n",
 		    VERSION(vbe->OemSoftwareRev));
@@ -163,7 +162,7 @@ vbeFree(vbeInfoPtr pVbe)
 
     xf86Int10FreePages(pVbe->pInt10,pVbe->memory,pVbe->num_pages);
     /* If we have initalized int10 we ought to free it, too */
-    if (pVbe->init_int10) 
+    if (pVbe->init_int10)
 	xf86FreeInt10(pVbe->pInt10);
     xfree(pVbe);
     return;
@@ -174,7 +173,7 @@ vbeProbeDDC(vbeInfoPtr pVbe)
 {
     char *ddc_level;
     int screen = pVbe->pInt10->scrnIndex;
-    
+
     if (pVbe->ddc == DDC_NONE)
 	return FALSE;
     if (pVbe->ddc != DDC_UNCHECKED)
@@ -200,7 +199,7 @@ vbeProbeDDC(vbeInfoPtr pVbe)
 	xf86DrvMsg(screen,X_INFO,"VESA VBE DDC supported\n");
 	switch (pVbe->pInt10->bx & 0x3) {
 	case 0:
-  	    ddc_level = " none"; 
+  	    ddc_level = " none";
 	    pVbe->ddc = DDC_NONE;
 	    break;
 	case 1:
@@ -208,11 +207,11 @@ vbeProbeDDC(vbeInfoPtr pVbe)
 	    pVbe->ddc = DDC_1;
 	    break;
 	case 2:
-  	    ddc_level = " 2"; 
+  	    ddc_level = " 2";
 	    pVbe->ddc = DDC_2;
 	    break;
 	case 3:
-  	    ddc_level = " 1 + 2"; 
+  	    ddc_level = " 1 + 2";
 	    pVbe->ddc = DDC_1_2;
 	    break;
 	default:
@@ -220,25 +219,25 @@ vbeProbeDDC(vbeInfoPtr pVbe)
 	    pVbe->ddc = DDC_NONE;
 	    break;
 	}
-  	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC Level%s\n",ddc_level); 
+  	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC Level%s\n",ddc_level);
   	if (pVbe->pInt10->bx & 0x4) {
-    	    xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC Screen blanked" 
-    			"for data transfer\n"); 
+    	    xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC Screen blanked"
+    			"for data transfer\n");
     	    pVbe->ddc_blank = TRUE;
     	}  else
     	    pVbe->ddc_blank = FALSE;
-	    
+
   	xf86DrvMsgVerb(screen,X_INFO,3,
-		       "VESA VBE DDC transfer in appr. %x sec.\n", 
-		       (pVbe->pInt10->bx >> 8) & 0xff); 
+		       "VESA VBE DDC transfer in appr. %x sec.\n",
+		       (pVbe->pInt10->bx >> 8) & 0xff);
     }
-    
-    return TRUE; 
+
+    return TRUE;
 }
 
 typedef enum {
   VBEOPT_NOVBE,
-    VBEOPT_NODDC
+  VBEOPT_NODDC,
 } VBEOpts;
 
 static const OptionInfoRec VBEOptions[] = {
@@ -267,7 +266,7 @@ vbeReadEDID(vbeInfoPtr pVbe)
     xf86GetOptValBool(options, VBEOPT_NODDC, &noddc);
     xfree(options);
     if (novbe || noddc) return NULL;
-    
+
     if (!vbeProbeDDC(pVbe)) goto error;
 
     memset(page,0,sizeof(vbeInfoPtr));
@@ -290,18 +289,18 @@ vbeReadEDID(vbeInfoPtr pVbe)
     switch (pVbe->pInt10->ax & 0xff00) {
     case 0x0:
 	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC read successfully\n");
-  	tmp = (unsigned char *)xnfalloc(128); 
-  	memcpy(tmp,page,128); 
+  	tmp = (unsigned char *)xnfalloc(128);
+  	memcpy(tmp,page,128);
 	break;
     case 0x100:
-	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC read failed\n");	
+	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC read failed\n");
 	break;
     default:
 	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC unkown failure %i\n",
 		       pVbe->pInt10->ax & 0xff00);
 	break;
     }
-    
+
  error:
     return tmp;
 }
@@ -312,7 +311,7 @@ vbeDoEDID(vbeInfoPtr pVbe, pointer pDDCModule)
     xf86MonPtr    pMonitor;
     pointer       pModule;
     unsigned char *DDC_data = NULL;
-    
+
     if (!pVbe) return NULL;
     if (pVbe->version < 0x200)
 	return NULL;
@@ -323,12 +322,12 @@ vbeDoEDID(vbeInfoPtr pVbe, pointer pDDCModule)
 	if (!pModule)
 	    return NULL;
     }
-        
+
     DDC_data = vbeReadEDID(pVbe);
 
-    if (!DDC_data) 
+    if (!DDC_data)
 	return NULL;
-    
+
     pMonitor = xf86InterpretEDID(pVbe->pInt10->scrnIndex, DDC_data);
 
     if (!pDDCModule)
@@ -603,7 +602,7 @@ VBEFreeModeInfo(VbeModeInfoBlock *block)
 }
 
 Bool
-VBESaveRestore(vbeInfoPtr pVbe, vbeSaveRestoreFunction function, 
+VBESaveRestore(vbeInfoPtr pVbe, vbeSaveRestoreFunction function,
 	       pointer *memory, int *size, int *real_mode_pages)
 {
     /*
@@ -675,7 +674,7 @@ VBESaveRestore(vbeInfoPtr pVbe, vbeSaveRestoreFunction function,
 
 	/* Save/Restore Super VGA state */
 	if (function != MODE_QUERY) {
-	    
+
 	    if (!*memory) return FALSE;
 	    pVbe->pInt10->num = 0x10;
 	    pVbe->pInt10->ax = 0x4f04;
@@ -690,7 +689,7 @@ VBESaveRestore(vbeInfoPtr pVbe, vbeSaveRestoreFunction function,
 	      return FALSE;
 	    }
 	    pVbe->pInt10->cx = 0x000f;
-	    
+
 	    pVbe->pInt10->es = SEG_ADDR(*real_mode_pages);
 	    pVbe->pInt10->bx = SEG_OFF(*real_mode_pages);
 	    xf86ExecX86int10(pVbe->pInt10);
@@ -824,7 +823,7 @@ VBESetGetDACPaletteFormat(vbeInfoPtr pVbe, int bits)
     pVbe->pInt10->ax = 0x4f08;
     if (!bits)
 	pVbe->pInt10->bx = 0x01;
-    else 
+    else
 	pVbe->pInt10->bx = (bits & 0x00ff) << 8;
     xf86ExecX86int10(pVbe->pInt10);
 
@@ -963,12 +962,12 @@ VBEBuildVbeModeList(vbeInfoPtr pVbe, VbeInfoBlock *vbe)
     return ModeList;
 }
 
-unsigned short 
+unsigned short
 VBECalcVbeModeIndex(vbeModeInfoPtr m, DisplayModePtr mode, int bpp)
 {
     while (m) {
-	if (bpp == m->bpp 
-	    && mode->HDisplay == m->width 
+	if (bpp == m->bpp
+	    && mode->HDisplay == m->width
 	    && mode->VDisplay == m->height)
 	    return m->n;
 	m = m->next;
@@ -1003,11 +1002,11 @@ VBEVesaSaveRestore(vbeInfoPtr pVbe, vbeSaveRestorePtr vbe_sr,
 	    return;
 	}
 	ErrorF("VBESaveRestore done\n");
-    } 
-    
+    }
+
     if (function == MODE_SAVE && !SaveSucc)
 	    (void)VBEGetVBEMode(pVbe, &vbe_sr->stateMode);
-	
+
     if (function == MODE_RESTORE && vbe_sr->stateMode != -1)
 	    VBESetVBEMode(pVbe, vbe_sr->stateMode, NULL);
 
@@ -1022,7 +1021,7 @@ VBEGetPixelClock(vbeInfoPtr pVbe, int mode, int clock)
 	BL := 00h Get Pixel Clock
 	ECX := pixel clock in units of Hz
         DX := mode number
-     
+
     Output:
 	AX := VBE Return Status
 	ECX := Closest pixel clock
@@ -1049,7 +1048,7 @@ VBEDPMSSet(vbeInfoPtr pVbe, int mode)
 	AX := 4F10h DPMS
 	BL := 01h Set Display Power State
 	BH := requested power state
-     
+
     Output:
 	AX := VBE Return Status
      */
@@ -1129,11 +1128,11 @@ VBEReadPanelID(vbeInfoPtr pVbe)
     switch (pVbe->pInt10->ax & 0xff00) {
     case 0x0:
 	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE PanelID read successfully\n");
-	tmp = xnfalloc(32); 
-	memcpy(tmp, page, 32); 
+	tmp = xnfalloc(32);
+	memcpy(tmp, page, 32);
 	break;
     case 0x100:
-	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE PanelID read failed\n");       
+	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE PanelID read failed\n");
 	break;
     default:
 	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE PanelID unknown failure %i\n",

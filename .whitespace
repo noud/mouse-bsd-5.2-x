@@ -7203,7 +7203,6 @@
 ./external/mit/xorg-server/dist/hw/xfree86/utils/gtf/Makefile.in
 ./external/mit/xorg-server/dist/hw/xfree86/utils/gtf/gtf.c
 ./external/mit/xorg-server/dist/hw/xfree86/vbe/Makefile.in
-./external/mit/xorg-server/dist/hw/xfree86/vbe/vbe.c
 ./external/mit/xorg-server/dist/hw/xfree86/vbe/vbe.h
 ./external/mit/xorg-server/dist/hw/xfree86/vbe/vbeModes.c
 ./external/mit/xorg-server/dist/hw/xfree86/vbe/vbeModes.h
