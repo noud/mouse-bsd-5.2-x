@@ -311,6 +311,7 @@ vbeDoEDID(vbeInfoPtr pVbe, pointer pDDCModule)
     xf86MonPtr    pMonitor;
     pointer       pModule;
     unsigned char *DDC_data = NULL;
+ int screen;
 
     if (!pVbe) return NULL;
     if (pVbe->version < 0x200)
@@ -328,6 +329,31 @@ vbeDoEDID(vbeInfoPtr pVbe, pointer pDDCModule)
     if (!DDC_data)
 	return NULL;
 
+ screen = pVbe->pInt10->scrnIndex;
+ xf86DrvMsgVerb(screen,X_INFO,3,"DDC 00: %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x\n",
+	DDC_data[0], DDC_data[1], DDC_data[2], DDC_data[3], DDC_data[4], DDC_data[5], DDC_data[6], DDC_data[7],
+	DDC_data[8], DDC_data[9], DDC_data[10], DDC_data[11], DDC_data[12], DDC_data[13], DDC_data[14], DDC_data[15]);
+ xf86DrvMsgVerb(screen,X_INFO,3,"DDC 10: %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x\n",
+	DDC_data[16], DDC_data[17], DDC_data[18], DDC_data[19], DDC_data[20], DDC_data[21], DDC_data[22], DDC_data[23],
+	DDC_data[24], DDC_data[25], DDC_data[26], DDC_data[27], DDC_data[28], DDC_data[29], DDC_data[30], DDC_data[31]);
+ xf86DrvMsgVerb(screen,X_INFO,3,"DDC 20: %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x\n",
+	DDC_data[32], DDC_data[33], DDC_data[34], DDC_data[35], DDC_data[36], DDC_data[37], DDC_data[38], DDC_data[39],
+	DDC_data[40], DDC_data[41], DDC_data[42], DDC_data[43], DDC_data[44], DDC_data[45], DDC_data[46], DDC_data[47]);
+ xf86DrvMsgVerb(screen,X_INFO,3,"DDC 30: %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x\n",
+	DDC_data[48], DDC_data[49], DDC_data[50], DDC_data[51], DDC_data[52], DDC_data[53], DDC_data[54], DDC_data[55],
+	DDC_data[56], DDC_data[57], DDC_data[58], DDC_data[59], DDC_data[60], DDC_data[61], DDC_data[62], DDC_data[63]);
+ xf86DrvMsgVerb(screen,X_INFO,3,"DDC 40: %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x\n",
+	DDC_data[64], DDC_data[65], DDC_data[66], DDC_data[67], DDC_data[68], DDC_data[69], DDC_data[70], DDC_data[71],
+	DDC_data[72], DDC_data[73], DDC_data[74], DDC_data[75], DDC_data[76], DDC_data[77], DDC_data[78], DDC_data[79]);
+ xf86DrvMsgVerb(screen,X_INFO,3,"DDC 50: %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x\n",
+	DDC_data[80], DDC_data[81], DDC_data[82], DDC_data[83], DDC_data[84], DDC_data[85], DDC_data[86], DDC_data[87],
+	DDC_data[88], DDC_data[89], DDC_data[90], DDC_data[91], DDC_data[92], DDC_data[93], DDC_data[94], DDC_data[95]);
+ xf86DrvMsgVerb(screen,X_INFO,3,"DDC 60: %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x\n",
+	DDC_data[96], DDC_data[97], DDC_data[98], DDC_data[99], DDC_data[100], DDC_data[101], DDC_data[102], DDC_data[103],
+	DDC_data[104], DDC_data[105], DDC_data[106], DDC_data[107], DDC_data[108], DDC_data[109], DDC_data[110], DDC_data[111]);
+ xf86DrvMsgVerb(screen,X_INFO,3,"DDC 70: %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x\n",
+	DDC_data[112], DDC_data[113], DDC_data[114], DDC_data[115], DDC_data[116], DDC_data[117], DDC_data[118], DDC_data[119],
+	DDC_data[120], DDC_data[121], DDC_data[122], DDC_data[123], DDC_data[124], DDC_data[125], DDC_data[126], DDC_data[127]);
     pMonitor = xf86InterpretEDID(pVbe->pInt10->scrnIndex, DDC_data);
 
     if (!pDDCModule)
