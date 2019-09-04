@@ -8,6 +8,12 @@
  * Authors: Paulo César Pereira de Andrade <pcpa@conectiva.com.br>
  */
 
+// This next block added for capture_ddc() and fallback_ddc()
+#include <errno.h>
+#include <fcntl.h>
+#include <strings.h>
+#include <sys/stat.h>
+
 #ifdef HAVE_XORG_CONFIG_H
 #include <xorg-config.h>
 #endif
@@ -235,6 +241,77 @@ vbeProbeDDC(vbeInfoPtr pVbe)
     return TRUE;
 }
 
+/*
+ * The server typically runs setuid root, because of some brain-damaged
+ *  design decisions.  This makes it difficult to open the capture file
+ *  safely.  And there's no faccess().  So, we require that (a) the
+ *  file already exist, (b) it is a plain file, and (c) it is mode 777.
+ */
+static void capture_ddc(int screen, const char *capfile, const unsigned char *blk)
+{
+ int fd;
+ int w;
+ struct stat stb;
+
+ fd = open(capfile,O_WRONLY|O_PLAIN,0);
+ if (fd < 0)
+  { xf86DrvMsgVerb(screen,X_ERROR,2,"DDC capture failed: open %s: %s",capfile,strerror(errno));
+    return;
+  }
+ if ( (fstat(fd,&stb) < 0) ||
+      ((stb.st_mode & 0777) != 0777) )
+  { xf86DrvMsgVerb(screen,X_ERROR,2,"DDC capture failed: file isn't mode 777");
+    close(fd);
+    return;
+  }
+ w = write(fd,blk,128);
+ if (w < 0)
+  { xf86DrvMsgVerb(screen,X_ERROR,2,"DDC capture failed: write: %s",strerror(errno));
+  }
+ else if (w != 128)
+  { xf86DrvMsgVerb(screen,X_ERROR,2,"DDC capture failed: write returned %d, not 128",w);
+  }
+ close(fd);
+}
+
+/*
+ * The server typically runs setuid root, because of some brain-damaged
+ *  design decisions.  This makes it difficult to open the capture file
+ *  safely.  And there's no faccess().  So, we require that (a) the
+ *  file is a plain file, and (b) it is readable by everyone.
+ */
+static int fallback_ddc(int screen, const char *fallback, unsigned char *blk)
+{
+ int fd;
+ int r;
+ struct stat stb;
+
+ fd = open(fallback,O_RDONLY|O_PLAIN,0);
+ if (fd < 0)
+  { xf86DrvMsgVerb(screen,X_ERROR,2,"DDC fallback failed: open %s: %s",fallback,strerror(errno));
+    return(1);
+  }
+ if ( (fstat(fd,&stb) < 0) ||
+      ((stb.st_mode & 0444) != 0444) )
+  { xf86DrvMsgVerb(screen,X_ERROR,2,"DDC fallback failed: file must be readable by everyone");
+    close(fd);
+    return(1);
+  }
+ r = read(fd,blk,128);
+ if (r < 0)
+  { xf86DrvMsgVerb(screen,X_ERROR,2,"DDC fallback failed: read: %s",strerror(errno));
+    close(fd);
+    return(1);
+  }
+ if (r != 128)
+  { xf86DrvMsgVerb(screen,X_ERROR,2,"DDC fallback failed: read returned %d, not 128",r);
+    close(fd);
+    return(1);
+  }
+ close(fd);
+ return(0);
+}
+
 typedef enum {
   VBEOPT_NOVBE,
   VBEOPT_NODDC,
@@ -245,6 +322,9 @@ static const OptionInfoRec VBEOptions[] = {
     { VBEOPT_NODDC,	"NoDDC",	OPTV_BOOLEAN,	{0},	FALSE },
     { -1,		NULL,		OPTV_NONE,	{0},	FALSE },
 };
+
+extern const char *ddc_capture;
+extern const char *ddc_fallback;
 
 static unsigned char *
 vbeReadEDID(vbeInfoPtr pVbe)
@@ -291,9 +371,20 @@ vbeReadEDID(vbeInfoPtr pVbe)
 	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC read successfully\n");
   	tmp = (unsigned char *)xnfalloc(128);
   	memcpy(tmp,page,128);
+					 if (ddc_capture) capture_ddc(screen,ddc_capture,tmp);
 	break;
     case 0x100:
 	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC read failed\n");
+					 if (ddc_fallback)
+					  { tmp = xnfalloc(128);
+					    if (fallback_ddc(screen,ddc_fallback,tmp))
+					     { xfree(tmp);
+					       tmp = 0;
+					     }
+					    else
+					     { memcpy(page,tmp,128);
+					     }
+					  }
 	break;
     default:
 	xf86DrvMsgVerb(screen,X_INFO,3,"VESA VBE DDC unkown failure %i\n",

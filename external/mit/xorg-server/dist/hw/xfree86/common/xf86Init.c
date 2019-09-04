@@ -1518,6 +1518,9 @@ xf86PrintDefaultLibraryPath(void)
  *
  */
 
+const char *ddc_capture = 0;
+const char *ddc_fallback = 0;
+
 /* ARGSUSED */
 int
 ddxProcessArgument(int argc, char **argv, int i)
@@ -1843,6 +1846,16 @@ ddxProcessArgument(int argc, char **argv, int i)
     } else {
        FatalError("Invalid isolated device specification\n");
     }
+  }
+ if (!strcmp(argv[i], "-ddc-capture"))
+  { CHECK_FOR_REQUIRED_ARGUMENT();
+    ddc_capture = argv[++i];
+    return(2);
+  }
+ if (!strcmp(argv[i], "-ddc-fallback"))
+  { CHECK_FOR_REQUIRED_ARGUMENT();
+    ddc_fallback = argv[++i];
+    return(2);
   }
   /* Notice cmdline xkbdir, but pass to dix as well */
   if (!strcmp(argv[i], "-xkbdir"))
