@@ -111,6 +111,7 @@ XRRGetOutputInfo (Display *dpy, XRRScreenResources *resources, RROutput output)
      */
     _XReadPad (dpy, xoi->name, rep.nameLength);
     xoi->name[rep.nameLength] = '\0';
+    xoi->nameLen = rep.nameLength;
 
     /*
      * Skip any extra data
