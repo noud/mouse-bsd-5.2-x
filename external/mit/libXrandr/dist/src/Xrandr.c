@@ -16,7 +16,7 @@
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL COMPAQ
  * BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
- * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN 
+ * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * Author:  Jim Gettys, HP Labs, HP.
@@ -229,15 +229,15 @@ XRRFindDisplay (Display *dpy)
 
     dpyinfo = XextFindDisplay (&XRRExtensionInfo, dpy);
     if (!dpyinfo) {
-	dpyinfo = XextAddDisplay (&XRRExtensionInfo, dpy, 
+	dpyinfo = XextAddDisplay (&XRRExtensionInfo, dpy,
 				  XRRExtensionName,
 				  &rr_extension_hooks,
 				  RRNumberEvents, NULL);
 	numscreens = ScreenCount(dpy);
-	xrri = Xmalloc (sizeof(XRandRInfo) + 
+	xrri = Xmalloc (sizeof(XRandRInfo) +
 				 sizeof(char *) * numscreens);
 	xrri->config = (XRRScreenConfiguration **)(xrri + 1);
-	for(i = 0; i < numscreens; i++) 
+	for(i = 0; i < numscreens; i++)
 	  xrri->config[i] = NULL;
 	xrri->major_version = -1;
 	dpyinfo->data = (char *) xrri;
@@ -316,7 +316,7 @@ Status XRRQueryVersion (Display *dpy,
 
     xrri = (XRandRInfo *) info->data;
 
-    /* 
+    /*
      * only get the version information from the server if we don't have it already
      */
     if (xrri->major_version == -1) {
@@ -369,7 +369,7 @@ _XRRVersionHandler (Display	    *dpy,
     return True;
 }
 
-/* 
+/*
  * in protocol version 0.1, routine added to allow selecting for new events.
  */
 
@@ -418,7 +418,7 @@ int XRRUpdateConfiguration(XEvent *event)
     switch (event->type - info->codes->first_event) {
     case RRScreenChangeNotify:
 	scevent = (XRRScreenChangeNotifyEvent *) event;
-	snum = XRRRootToScreen(dpy, 
+	snum = XRRRootToScreen(dpy,
 			       ((XRRScreenChangeNotifyEvent *) event)->root);
 	if (scevent->rotation & (RR_Rotate_90 | RR_Rotate_270)) {
 		dpy->screens[snum].width   = scevent->height;
@@ -437,9 +437,9 @@ int XRRUpdateConfiguration(XEvent *event)
 	return 0;
     }
     xrri = (XRandRInfo *) info->data;
-    /* 
-     * so the next time someone wants some data, it will be fetched; 
-     * it might be better to force the round trip immediately, but 
+    /*
+     * so the next time someone wants some data, it will be fetched;
+     * it might be better to force the round trip immediately, but
      * I dislike pounding the server simultaneously when not necessary
      */
     if (xrri->config[snum] != NULL) {

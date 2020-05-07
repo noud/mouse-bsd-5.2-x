@@ -18,4 +18,4 @@ INCLUDES = -I$(top_srcdir)/include/X11/extensions
 libXrandr_la_LDFLAGS = -version-number 2:2:0 -no-undefined
 
 libXrandrincludedir = $(includedir)/X11/extensions
-libXrandrinclude_HEADERS = $(top_srcdir)/include/X11/extensions/Xrandr.h 
+libXrandrinclude_HEADERS = $(top_srcdir)/include/X11/extensions/Xrandr.h

@@ -34,7 +34,7 @@
 #include "Xrandrint.h"
 
 #define OutputInfoExtra	(SIZEOF(xRRGetOutputInfoReply) - 32)
-				
+
 XRROutputInfo *
 XRRGetOutputInfo (Display *dpy, XRRScreenResources *resources, RROutput output)
 {
@@ -67,8 +67,8 @@ XRRGetOutputInfo (Display *dpy, XRRScreenResources *resources, RROutput output)
 			 rep.nClones * 4 +
 			 ((rep.nameLength + 3) & ~3));
 
-    /* 
-     * first we must compute how much space to allocate for 
+    /*
+     * first we must compute how much space to allocate for
      * randr library's use; we'll allocate the structures in a single
      * allocation, on cleanlyness grounds.
      */
@@ -105,19 +105,19 @@ XRRGetOutputInfo (Display *dpy, XRRScreenResources *resources, RROutput output)
     _XRead32 (dpy, xoi->crtcs, rep.nCrtcs << 2);
     _XRead32 (dpy, xoi->modes, rep.nModes << 2);
     _XRead32 (dpy, xoi->clones, rep.nClones << 2);
-    
+
     /*
      * Read name and '\0' terminate
      */
     _XReadPad (dpy, xoi->name, rep.nameLength);
     xoi->name[rep.nameLength] = '\0';
-    
+
     /*
      * Skip any extra data
      */
     if (nbytes > nbytesRead)
 	_XEatData (dpy, (unsigned long) (nbytes - nbytesRead));
-    
+
     UnlockDisplay (dpy);
     SyncHandle ();
     return (XRROutputInfo *) xoi;
@@ -144,7 +144,7 @@ XRRSetOutputPrimary(Display *dpy, Window window, RROutput output)
 
     RRSimpleCheckExtension (dpy, info);
 
-    if (!XRRQueryVersion (dpy, &major_version, &minor_version) || 
+    if (!XRRQueryVersion (dpy, &major_version, &minor_version) ||
 	!_XRRHasOutputPrimary (major_version, minor_version))
 	return;
 
@@ -169,7 +169,7 @@ XRRGetOutputPrimary(Display *dpy, Window window)
 
     RRCheckExtension (dpy, info, 0);
 
-    if (!XRRQueryVersion (dpy, &major_version, &minor_version) || 
+    if (!XRRQueryVersion (dpy, &major_version, &minor_version) ||
 	!_XRRHasOutputPrimary (major_version, minor_version))
 	return None;
 
@@ -181,7 +181,7 @@ XRRGetOutputPrimary(Display *dpy, Window window)
 
     if (!_XReply (dpy, (xReply *) &rep, 0, xFalse))
 	rep.output = None;
-	
+
     UnlockDisplay(dpy);
     SyncHandle();
 
