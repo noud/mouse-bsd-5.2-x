@@ -3507,16 +3507,6 @@
 ./external/mit/libXrandr/dist/man/Makefile.am
 ./external/mit/libXrandr/dist/man/Makefile.in
 ./external/mit/libXrandr/dist/man/Xrandr.man
-./external/mit/libXrandr/dist/src/Makefile.am
-./external/mit/libXrandr/dist/src/Makefile.in
-./external/mit/libXrandr/dist/src/Xrandr.c
-./external/mit/libXrandr/dist/src/Xrandrint.h
-./external/mit/libXrandr/dist/src/XrrConfig.c
-./external/mit/libXrandr/dist/src/XrrCrtc.c
-./external/mit/libXrandr/dist/src/XrrMode.c
-./external/mit/libXrandr/dist/src/XrrOutput.c
-./external/mit/libXrandr/dist/src/XrrProperty.c
-./external/mit/libXrandr/dist/src/XrrScreen.c
 ./external/mit/libXrender/dist/ChangeLog
 ./external/mit/libXrender/dist/Makefile.am
 ./external/mit/libXrender/dist/Makefile.in
